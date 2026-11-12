@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>SNS 성과 대시보드</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="data.js"></script>
+<style>
+  :root { --bg:#f6f7f9; --card:#fff; --ink:#1c2430; --mute:#6b7685; --line:#e4e7ec; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Malgun Gothic",-apple-system,sans-serif; background:var(--bg); color:var(--ink); }
+  header { background:#fff; border-bottom:1px solid var(--line); padding:20px 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  h1 { font-size:20px; margin:0; }
+  .sub { color:var(--mute); font-size:13px; margin-top:4px; }
+  .sample { background:#fff4e5; color:#b45309; border:1px solid #fcd9a8; padding:6px 12px; border-radius:8px; font-size:13px; }
+  main { max-width:1100px; margin:0 auto; padding:24px 20px 60px; }
+  .controls { display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; align-items:center; }
+  .tabs { display:flex; gap:8px; flex-wrap:wrap; }
+  .tabs button { white-space:nowrap; }
+  button, select { border:1px solid var(--line); background:#fff; padding:8px 16px; border-radius:20px; font-size:14px; cursor:pointer; font-family:inherit; color:var(--ink); }
+  button.on { background:var(--ink); color:#fff; border-color:var(--ink); }
+  select { padding:8px 14px; font-weight:600; }
+  .period { color:var(--mute); font-size:13px; }
+  .row { display:grid; gap:16px; margin-bottom:16px; }
+  .kpis { grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); }
+  .two { grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr)); }
+  .row > * { min-width:0; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 20px; }
+  .card h3 { margin:0 0 12px; font-size:15px; }
+  .card h3 small { color:var(--mute); font-weight:400; font-size:12px; margin-left:6px; }
+  .kpi .label { color:var(--mute); font-size:13px; }
+  .kpi .num { font-size:28px; font-weight:700; margin:6px 0 2px; }
+  .up { color:#16a34a; font-size:12px; } .down { color:#dc2626; font-size:12px; } .na { color:var(--mute); font-size:12px; }
+  .chart { position:relative; height:260px; }
+  .funnel .bar { height:34px; border-radius:6px; margin:8px 0; color:#fff; display:flex; align-items:center; padding:0 12px; font-size:13px; white-space:nowrap; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  td, th { text-align:left; padding:8px 4px; border-bottom:1px solid var(--line); }
+  td.r, th.r { text-align:right; }
+  .grp { font-weight:700; background:#fafbfc; }
+  .sub-r td:first-child { padding-left:18px; color:#444; }
+  details.grpbox { border-bottom:1px solid var(--line); }
+  details.grpbox summary { display:flex; justify-content:space-between; padding:9px 4px; cursor:pointer; font-weight:600; list-style:none; }
+  details.grpbox summary::before { content:"▸"; margin-right:6px; color:var(--mute); }
+  details.grpbox[open] summary::before { content:"▾"; }
+  details.grpbox summary span { flex:1; }
+  details.grpbox table { margin-bottom:8px; }
+  .mini { display:inline-block; height:8px; border-radius:4px; vertical-align:middle; margin-right:6px; }
+  tr.pr { cursor:pointer; } tr.pr:hover td { background:#fafbfc; }
+  .bar2 { height:8px; border-radius:4px; background:var(--line); overflow:hidden; min-width:90px; }
+  .bar2 i { display:block; height:100%; }
+  .pill { display:inline-block; padding:2px 9px; border-radius:10px; font-size:12px; color:#fff; white-space:nowrap; }
+  .scroll { overflow-x:auto; }
+  .scroll table { min-width:760px; }
+  .scroll th, .scroll td { white-space:nowrap; } .scroll td.t { white-space:normal; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:8px 16px; margin:4px 0 12px; }
+  .stats div { font-size:12px; color:var(--mute); } .stats b { display:block; font-size:17px; color:var(--ink); }
+  .ex { background:#fff4e5; color:#b45309; border-radius:6px; padding:1px 7px; font-size:11px; margin-left:6px; font-weight:400; }
+  footer { color:var(--mute); font-size:12px; text-align:center; padding:20px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>SNS 성과 대시보드</h1>
+    <div class="sub">네이버 블로그 · 유튜브 | 마지막 업데이트: <span id="updated"></span></div>
+  </div>
+  <div class="sample" id="sampleBadge" style="display:none"></div>
+</header>
+<main>
+  <div class="controls">
+    <div class="tabs" id="tabs"></div>
+    <select id="range" onchange="days=+this.value;draw()">
+      <option value="3">최근 3일</option>
+      <option value="5">최근 5일</option>
+      <option value="7" selected>최근 7일</option>
+      <option value="14">최근 14일</option>
+      <option value="30">최근 한 달</option>
+      <option value="90">최근 3개월</option>
+      <option value="180">최근 6개월</option>
+      <option value="365">올해</option>
+    </select>
+    <span class="period" id="period"></span>
+  </div>
+  <div id="view"></div>
+</main>
+<footer>이 화면은 주 2~3회 최신 수치로 업데이트됩니다.</footer>
+
+<script>
+// 예시 숫자 생성용 (링크 탭 예시 화면에서 사용)
+function rng(seed){ return () => (seed = (seed*9301+49297)%233280)/233280; }
+function makeDays(start, end){
+  const out=[]; for(let d=new Date(start); d<=new Date(end); d.setDate(d.getDate()+1)) out.push(new Date(d)); return out;
+}
+const CFG = {
+  blog:{name:"네이버 블로그", color:"#03a94d"},
+  yt:  {name:"유튜브",        color:"#e03131"},
+  link:{name:"링크·가입 전환", color:"#2f5bea"}
+};
+// 주소 끝에 #yt / #link 를 붙이면 그 탭으로 바로 열림 (주간보고 캡처용)
+let tab=CFG[location.hash.slice(1)]?location.hash.slice(1):"blog", days=7, charts=[], trend="30d";
+const fmt = n => Math.round(n).toLocaleString("ko-KR");
+const sgn = n => (n>=0?"+":"")+fmt(n);
+const md = d => `${d.getMonth()+1}/${d.getDate()}`;
+const sum = (a,f) => a.reduce((x,y)=>x+f(y),0);
+const avg = (a,f) => a.length ? sum(a,f)/a.length : 0;
+
+function renderTabs(){
+  document.getElementById("tabs").innerHTML = ["blog","yt","link"].map(k=>`<button class="${tab===k?"on":""}" onclick="tab='${k}';draw()">${CFG[k].name}</button>`).join("");
+}
+function delta(cur, prev, prevOk){
+  if(!prevOk) return `<div class="na">비교할 이전 기간 없음</div>`;
+  const p = prev ? (cur-prev)/prev*100 : 0;
+  return `<div class="${p>=0?"up":"down"}">${p>=0?"▲":"▼"} 직전 ${days}일 대비 ${Math.abs(p).toFixed(1)}%</div>`;
+}
+const SAMPLE_POSTS = {
+  blog:[{title:"(예시) 37회 공인중개사 시험 합격 후기",date:"2026-11-10",views:312,sources:[["통합검색_모바일",46],["메인_모바일_홈판",22],["Google",18],["블로그_모바일",8],["기타",6]]},
+        {title:"(예시) 부동산 계약서 꼭 확인할 5가지",date:"2026-11-12",views:148,sources:[["통합검색_모바일",38],["Google",30],["메인_모바일_홈판",16],["Daum 검색_모바일",9],["기타",7]]}]
+};
+function srcBars(list,col){
+  return list.map(([n,v])=>`<div style="display:flex;align-items:center;gap:10px;margin:7px 0;font-size:13px"><span style="width:130px">${n}</span><div class="bar2" style="flex:1"><i style="width:${Math.min(v,100)}%;background:${col}"></i></div><b style="width:52px;text-align:right">${v.toFixed(1)}%</b></div>`).join("");
+}
+function togglePost(el){ const n=el.nextElementSibling; const on=n.style.display==="none"; n.style.display=on?"":"none"; el.firstElementChild.firstChild.nodeValue=(on?"▾ ":"▸ "); }
+function weekLabel(ds){
+  const d=new Date(ds); d.setDate(d.getDate()-((d.getDay()+6)%7));
+  return {key:d.getTime(), label:`${d.getMonth()+1}월 ${Math.ceil(d.getDate()/7)}주차`};
+}
+function postsSection(k){
+  const real = POSTS_REAL[k]||[], isEx = !real.length, list = isEx ? SAMPLE_POSTS[k] : real, col = CFG[k].color, unit = k==="blog"?"글":"영상";
+  const weeks = new Map();
+  list.slice().sort((a,b)=>a.date<b.date?1:-1).forEach(p=>{ const w=weekLabel(p.date); if(!weeks.has(w.key)) weeks.set(w.key,{label:w.label,items:[]}); weeks.get(w.key).items.push(p); });
+  const html = [...weeks.entries()].sort((a,b)=>b[0]-a[0]).map(([key,w],wi)=>{
+    const tv = sum(w.items,p=>p.views);
+    const rows = w.items.slice().sort((a,b)=>a.date<b.date?-1:1).map(p=>{
+      const top = p.sources.slice().sort((a,b)=>b[1]-a[1])[0];
+      return `<tr class="pr" onclick="togglePost(this)"><td>▸ ${p.url&&!isEx?`<a href="${p.url}" target="_blank" onclick="event.stopPropagation()">${p.title}</a>`:p.title}</td><td>${p.date.slice(5).replace("-","/")}</td><td class="r">${fmt(p.views)}</td><td>${top?top[0]+" "+top[1]+"%":"-"}</td></tr>`+
+        `<tr style="display:none"><td colspan="4" style="background:#fafbfc;padding:10px 14px"><div class="sub" style="margin:0 0 6px">${p.sources.length?`이 ${unit}의 유입 경로${p.srcNote?` (${p.srcNote})`:""}`:"유입 경로 기록 없음 (해당 기준일 조회 0)"}</div>${srcBars(p.sources,col)}</td></tr>`;
+    }).join("");
+    return `<details class="grpbox"${wi===0?" open":""}><summary><span>${w.label} <small style="color:var(--mute);font-weight:400">${unit} ${w.items.length}개</small></span><b>${fmt(tv)}</b></summary><table><tr><th>제목</th><th>업로드일</th><th class="r">누적 조회</th><th>주요 유입</th></tr>${rows}</table></details>`;
+  }).join("");
+  const how = "매일 오후 5시~5시30분 통계 확인 후 data.js의 POSTS_REAL.blog에 반영";
+  return `<div class="row"><div class="card"><h3>${unit}별 조회수·유입 경로${isEx?'<span class="ex">예시</span>':""} <small>주차를 누르면 그 주의 ${unit} 목록, ${unit}을 누르면 유입 경로</small></h3>${html}
+    <div class="sub" style="margin-top:10px">${isEx?"아직 기록된 "+unit+"이 없어 예시를 보여드립니다. ":""}업데이트: ${how}.</div></div></div>`;
+}
+function drawBlog(){
+  const col = CFG.blog.color;
+  const V = BLOG.views.map(r=>({date:new Date(r[0]),total:r[1],peer:r[2],mutual:r[3],other:r[4]}));
+  const N = BLOG.neighbors.map(r=>({add:r[1],del:r[2],req:r[3]}));
+  const cur = V.slice(-days), curN = N.slice(-days);
+  const prev = V.slice(0,V.length-cur.length).slice(-days), prevN = N.slice(0,N.length-cur.length).slice(-days);
+  const prevOk = prev.length===cur.length;
+  document.getElementById("period").textContent = `${md(cur[0].date)} ~ ${md(cur[cur.length-1].date)}` + (cur.length<days?` (기록 시작일 10/19부터 ${cur.length}일치만 있음)`:"");
+  const tot = sum(cur,f=>f.total), net = sum(curN,f=>f.add-f.del), req = sum(curN,f=>f.req);
+  const nbShare = tot ? (sum(cur,f=>f.peer+f.mutual)/tot*100) : 0;
+  const best = cur.reduce((a,b)=>b.total>a.total?b:a);
+  const card = (l,v,sub)=>`<div class="card kpi"><div class="label">${l}</div><div class="num">${v}</div>${sub}</div>`;
+  const kpis =
+    card("총 조회수",fmt(tot),delta(tot,sum(prev,f=>f.total),prevOk)) +
+    card("일평균 조회수",fmt(tot/cur.length),`<div class="na">하루 기준</div>`) +
+    card("이웃 순증감",(net>=0?"+":"")+net,delta(net,sum(prevN,f=>f.add-f.del),prevOk)) +
+    card("서로이웃 신청",fmt(req),delta(req,sum(prevN,f=>f.req),prevOk)) +
+    card("이웃이 본 비중",nbShare.toFixed(1)+"%",`<div class="na">피이웃+서로이웃 조회</div>`) +
+    card("최고 조회일",fmt(best.total),`<div class="na">${md(best.date)}</div>`);
+  const srcTotal = sum(BLOG.sources,s=>s[2]);
+  const groups = [...new Set(BLOG.sources.map(s=>s[0]))].map(g=>({g,v:sum(BLOG.sources.filter(s=>s[0]===g),s=>s[2])}));
+  let rows="";
+  groups.forEach(gr=>{
+    const subs = BLOG.sources.filter(s=>s[0]===gr.g).map(s=>`<tr class="sub-r"><td>${s[1]}</td><td class="r">${s[2].toFixed(2)}%</td></tr>`).join("");
+    rows += `<details class="grpbox"><summary><span>${gr.g}</span><b>${gr.v.toFixed(1)}%</b></summary><table>${subs}</table></details>`;
+  });
+  document.getElementById("view").innerHTML = `
+    <div class="row kpis">${kpis}</div>
+    <div class="row two">
+      <div class="card"><h3>조회수 추이 <select onchange="trend=this.value;draw()" style="padding:4px 10px;font-size:13px;margin-left:8px">${[["7d","주간 (최근 7일, 일별)"],["30d","월간 (최근 30일, 일별)"],["3m","3개월 (주별 합계)"],["6m","6개월 (월별 합계)"],["1y","1년 (월별 합계)"]].map(([v,t])=>`<option value="${v}"${trend===v?" selected":""}>${t}</option>`).join("")}</select></h3><div class="chart"><canvas id="c1"></canvas></div></div>
+      <div class="card"><h3>유입 경로 <small>${BLOG.sourcesLabel}</small></h3><div class="chart"><canvas id="c2"></canvas></div></div>
+    </div>
+    ${postsSection("blog")}
+    <div class="row"><div class="card"><h3>유입 경로 상세 <small>눌러서 세부 채널 보기</small></h3>${rows}</div></div>
+    <div class="sub" style="margin-top:8px">유입 경로는 네이버가 일별 상세를 주간 단위로만 보여주어, 기간 선택과 관계없이 최근 주간 기준으로 표시됩니다.</div>`;
+  const mon = d=>{const x=new Date(d);x.setDate(x.getDate()-((x.getDay()+6)%7));return x;};
+  const bucket = (keyFn,labelFn,extra)=>{
+    const m = new Map();
+    [...(extra||[]),...V.map(f=>({date:f.date,total:f.total,nb:f.peer+f.mutual,n:1}))].forEach(r=>{
+      const k = keyFn(r.date); const o = m.get(k)||{date:r.date,total:0,nb:0,n:0};
+      o.total+=r.total; o.nb+=r.nb; o.n+=r.n; m.set(k,o);
+    });
+    return [...m.values()].sort((a,b)=>a.date-b.date).map(o=>({label:labelFn(o),total:o.total,nb:o.nb}));
+  };
+  const before = (BLOG.weeksBefore||[]).map(r=>({date:new Date(r[0]),total:r[1],nb:r[2]+r[3],n:7}));
+  let series;
+  if(trend==="7d"||trend==="30d"){
+    const k = trend==="7d"?7:30;
+    series = V.slice(-k).map(f=>({label:md(f.date),total:f.total,nb:f.peer+f.mutual}));
+  } else if(trend==="3m"){
+    series = bucket(d=>mon(d).getTime(),o=>md(mon(o.date))+(o.n<7?" 주(진행중)":" 주"),before).slice(-13);
+  } else {
+    const dim = d=>new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+    series = bucket(d=>d.getFullYear()+"-"+d.getMonth(),o=>(o.date.getMonth()+1)+"월"+(o.n<dim(o.date)?"(일부)":""),before).slice(trend==="6m"?-6:-12);
+  }
+  const line = (label,data,color,fill,dash)=>({label,data,borderColor:color,backgroundColor:color+"22",fill,tension:.3,borderDash:dash||[],pointRadius:3});
+  charts.push(new Chart(document.getElementById("c1"),{type:"line",data:{labels:series.map(p=>p.label),datasets:[
+    line("전체 조회수",series.map(p=>p.total),col,true),
+    line("이웃이 본 조회",series.map(p=>p.nb),"#94a3b8",false,[5,4])]},options:{maintainAspectRatio:false}}));
+  charts.push(new Chart(document.getElementById("c2"),{type:"doughnut",data:{labels:groups.map(g=>g.g),datasets:[{data:groups.map(g=>g.v),backgroundColor:[col,"#2f5bea","#f59e0b","#e03131","#8b5cf6","#94a3b8"]}]},options:{maintainAspectRatio:false,plugins:{legend:{position:"right"},tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed.toFixed(1)}%`}}}}}));
+}
+// ===== 링크·가입 전환 (블로그 배너 + 유튜브 설명란에 같이 쓰는 vo.la 짧은 링크 → 신청·가입) =====
+const ymd = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const SAMPLE_LINKS = (()=>{
+  const r = rng(33);
+  const mk = (start, end, base, cr) => {
+    const c=[], s=[];
+    makeDays(start, end).forEach((d,i)=>{
+      const v = Math.round(base*Math.exp(-i/7)*(.7+r()*.6)) + Math.round(r()*2);
+      c.push([ymd(d), v]); s.push([ymd(d), Math.round(v*cr*(.4+r()*1.2))]);
+    });
+    return {c, s};
+  };
+  const a = mk("2026-10-27","2026-11-09",30,.06), b = mk("2026-10-27","2026-11-09",24,.12), e = mk("2026-10-30","2026-11-09",34,.1);
+  const vid = [{title:"(예시) 부동산이즈 가맹 소개", uploaded:"2026-10-27", views:4120}];
+  return [
+    {name:"(예시) 부동산이즈 가맹신청", site:"부동산이즈", goal:"가맹 상담 신청", color:"#2f5bea", short:"https://vo.la/예시1",
+     postViews:1890, videos:vid, clicks:a.c, byChannel:{"네이버 블로그":180,"유튜브":95,"기타·직접":22}, signups:a.s},
+    {name:"(예시) 부동산이즈 창업설명회", site:"부동산이즈", goal:"설명회 신청", color:"#8b5cf6", short:"https://vo.la/예시2",
+     postViews:1890, videos:vid, clicks:b.c, byChannel:{"네이버 블로그":140,"유튜브":70,"기타·직접":18}, signups:b.s},
+    {name:"(예시) 부동산이지 홈페이지", site:"부동산이지", goal:"회원가입", color:"#f59e0b", short:"https://vo.la/예시3",
+     postViews:1890, videos:vid, clicks:e.c, byChannel:{"네이버 블로그":120,"유튜브":110,"기타·직접":25}, signups:e.s}
+  ];
+})();
+const CH_COLOR = {"네이버 블로그":"#03a94d","유튜브":"#e03131","기타·직접":"#94a3b8"};
+// 링크를 넣은 블로그 글(posts: 업로드일)은 POSTS_REAL.blog에서 조회수를 가져옴
+const linkPosts = l => (POSTS_REAL.blog||[]).filter(p=>(l.posts||[]).includes(p.date));
+const blogViews = l => l.posts ? sum(linkPosts(l),p=>p.views) : l.postViews||0;
+const ytViews = l => sum(l.videos||[],v=>v.views||0);
+function linkWhere(l){
+  const n = (l.posts||[]).length, ps = linkPosts(l), v = (l.videos||[]).length;
+  const blog = !l.posts ? "블로그 글 (예시)"
+    : n ? `블로그 글 ${n}개 (${ps[0]?ps[0].title:l.posts[0].slice(5).replace("-","/")+" 글"}${n>1?` 외 ${n-1}개`:""})` : "블로그 글 없음";
+  return `${blog} · ${v ? `유튜브 영상 ${v}개` : "유튜브 업로드 전"}`;
+}
+const shortLink = l => l.short ? `<a href="${l.short}" target="_blank">${l.short.replace(/^https?:\/\//,"")}</a>` : `<span class="na">주소 입력 전</span>`;
+function chSplit(l){
+  const b = l.byChannel;
+  if(!b) return `<div class="sub" style="margin-top:6px">채널별 클릭: 유입 경로 기록 전 (지금은 블로그·유튜브 합계)</div>`;
+  const t = sum(Object.values(b),x=>x) || 1, c = k => CH_COLOR[k]||"#cbd5e1";
+  const seg = Object.entries(b).map(([k,v])=>`<i style="width:${v/t*100}%;background:${c(k)}"></i>`).join("");
+  const leg = Object.entries(b).map(([k,v])=>`<span class="mini" style="width:8px;background:${c(k)}"></span>${k} ${fmt(v)} (${(v/t*100).toFixed(0)}%)`).join(" &nbsp; ");
+  return `<div class="sub" style="margin:8px 0 4px">채널별 클릭 (누적)</div><div class="bar2" style="display:flex">${seg}</div><div class="sub" style="margin-top:4px">${leg}</div>`;
+}
+function drawLinks(){
+  const isEx = !LINKS_REAL.length, L = isEx ? SAMPLE_LINKS : LINKS_REAL;
+  const dates = [...new Set(L.flatMap(l=>l.clicks.map(c=>c[0])))].sort();
+  const noClicks = !dates.length;
+  if(noClicks) dates.push(ymd(new Date()));
+  const endD = new Date(dates[dates.length-1]), startD = new Date(endD); startD.setDate(startD.getDate()-days+1);
+  const prevD = new Date(startD); prevD.setDate(prevD.getDate()-days);
+  const inR = ds => { const d=new Date(ds); return d>=startD && d<=endD; };
+  const inP = ds => { const d=new Date(ds); return d>=prevD && d<startD; };
+  const tally = (arr,f) => arr ? sum(arr.filter(x=>f(x[0])),x=>x[1]) : null;
+  const all = () => true;
+  const first = new Date(dates[0]);
+  const prevOk = first <= prevD;
+  const shownStart = first > startD ? first : startD;
+  document.getElementById("period").textContent = noClicks ? "아직 클릭 기록 없음 (vo.la 클릭 수를 옮겨 적으면 집계 시작)"
+    : `${md(shownStart)} ~ ${md(endD)}` + (first>startD?` (첫 클릭 기록 ${md(first)}부터)`:"");
+  document.getElementById("updated").textContent = ymd(endD);
+
+  const per = L.map(l=>({l,
+    c: tally(l.clicks,inR), s: tally(l.signups,inR),
+    cp: tally(l.clicks,inP), sp: tally(l.signups,inP),
+    cAll: tally(l.clicks,all), sAll: tally(l.signups,all)}));
+  const measured = per.filter(p=>p.s!==null);
+  const C = sum(per,p=>p.c), Cp = sum(per,p=>p.cp);
+  const S = measured.length ? sum(measured,p=>p.s) : null, Sp = measured.length ? sum(measured,p=>p.sp) : null;
+  const Cm = sum(measured,p=>p.c);
+  // 한 글·영상에 링크가 여러 개 들어가므로 조회수는 글·영상 단위로 한 번만 합산
+  const postSet = (POSTS_REAL.blog||[]).filter(p=>L.some(l=>(l.posts||[]).includes(p.date)));
+  const vidMap = new Map(); L.forEach(l=>(l.videos||[]).forEach(v=>vidMap.set(v.title,v.views||0)));
+  const views = (isEx ? Math.max(...L.map(blogViews)) : sum(postSet,p=>p.views)) + sum([...vidMap.values()],x=>x);
+  const cAllTot = sum(per,p=>p.cAll);
+  const pct = (a,b) => b ? (a/b*100).toFixed(1)+"%" : "-";
+  const card = (l,v,sub)=>`<div class="card kpi"><div class="label">${l}</div><div class="num">${v}</div>${sub}</div>`;
+  const kpis =
+    card("링크 클릭 수", fmt(C), delta(C,Cp,prevOk)) +
+    card("신청·가입", S===null?"측정 전":fmt(S), S===null?`<div class="na">구글시트 집계 연결 필요</div>`:delta(S,Sp,prevOk)) +
+    card("전환율", S===null?"-":pct(S,Cm), `<div class="na">클릭한 사람 중 신청·가입</div>`) +
+    card("글·영상 → 링크 클릭률", views?pct(cAllTot,views):"-", `<div class="na">링크 넣은 글·영상 누적 조회 대비</div>`);
+
+  const linkCards = per.map(p=>{
+    const l=p.l, lv=blogViews(l)+ytViews(l), top=Math.max(lv,p.cAll,1);
+    const steps = [["글·영상 조회",lv],["링크 클릭",p.cAll],[l.goal,p.sAll]];
+    const bars = steps.map(([lab,v],i)=>{
+      if(v===null) return `<div class="bar" style="background:#cbd5e1;width:40%">${lab} 측정 전</div>`;
+      const conv = i && steps[i-1][1] ? ` (${(v/steps[i-1][1]*100).toFixed(1)}%)` : "";
+      return `<div class="bar" style="background:${l.color};opacity:${1-i*.22};width:${Math.max(v/top*100,30)}%">${lab} ${fmt(v)}${conv}</div>`;
+    }).join("");
+    return `<div class="card funnel"><h3><span class="mini" style="width:12px;background:${l.color}"></span>${l.name} <small>목표: ${l.goal}</small></h3>
+      <div class="sub" style="margin:0 0 6px">링크 ${shortLink(l)} · ${linkWhere(l)}</div>
+      ${bars}${chSplit(l)}
+      <div class="sub" style="margin-top:8px">누적 기준. 선택 기간에는 클릭 ${fmt(p.c)} · ${l.goal} ${p.s===null?"측정 전":fmt(p.s)}</div></div>`;
+  }).join("");
+
+  const rows = per.map(p=>`<tr><td><span class="mini" style="width:10px;background:${p.l.color}"></span>${p.l.name}</td><td>${p.l.goal}</td><td>${shortLink(p.l)}</td>
+    <td class="r">${fmt(p.c)}</td><td class="r">${p.s===null?"측정 전":fmt(p.s)}</td><td class="r">${p.s===null?"-":pct(p.s,p.c)}</td></tr>`).join("");
+
+  document.getElementById("view").innerHTML = `
+    <div class="row kpis">${kpis}</div>
+    <div class="row" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">${linkCards}</div>
+    <div class="row"><div class="card"><h3>일별 링크 클릭 <small>실선 = 클릭(블로그·유튜브 합계) · 막대 = 신청·가입</small></h3><div class="chart"><canvas id="c1"></canvas></div></div></div>
+    <div class="row"><div class="card"><h3>링크별 성과 <small>선택 기간 기준</small>${isEx?'<span class="ex">예시</span>':""}</h3>
+      <table><tr><th>링크</th><th>목표</th><th>짧은 주소</th><th class="r">클릭</th><th class="r">신청·가입</th><th class="r">전환율</th></tr>${rows}</table></div></div>
+    <div class="sub" style="margin-top:8px">같은 링크를 네이버 블로그 글 속 배너와 유튜브 설명란에 함께 쓰므로, 클릭 수는 두 채널 합계입니다. 채널별 비중은 vo.la의 유입 경로로 나눕니다.
+      클릭 수는 vo.la, 신청·가입 수는 신청·가입 구글시트, 글 조회수는 '네이버 블로그' 탭의 글별 누적 조회, 영상 조회수는 유튜브 스튜디오에서 가져옵니다.
+      같은 사람이 여러 번 누르거나 자동 프로그램이 누른 클릭도 섞일 수 있어 대략적인 수치입니다. ${isEx?"아직 기록된 링크가 없어 예시를 보여드립니다. ":""}업데이트: data.js의 LINKS_REAL에 반영.</div>`;
+
+  const labels=[], keys=[];
+  for(let d=new Date(shownStart); d<=endD; d.setDate(d.getDate()+1)){ labels.push(md(d)); keys.push(ymd(d)); }
+  const val = (arr,k) => { if(!arr) return null; const f=arr.find(x=>x[0]===k); return f?f[1]:0; };
+  const ds = [];
+  per.forEach(p=>{
+    ds.push({type:"line",label:`${p.l.name} 클릭`,data:keys.map(k=>val(p.l.clicks,k)),borderColor:p.l.color,backgroundColor:p.l.color+"22",tension:.3,pointRadius:3});
+    if(p.l.signups) ds.push({type:"bar",label:`${p.l.name} ${p.l.goal}`,data:keys.map(k=>val(p.l.signups,k)),backgroundColor:p.l.color+"88"});
+  });
+  charts.push(new Chart(document.getElementById("c1"),{type:"bar",data:{labels,datasets:ds},options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}}));
+}
+// ===== 유튜브: 영상 등록 일정표 + 영상별 결과 (네오비TV 채널 중 우리 영상만) =====
+const ST_COLOR = {"업로드 완료":"#16a34a","제작 완료":"#2f5bea","제작 중":"#f59e0b","기획 중":"#94a3b8","지연":"#dc2626"};
+const TODAY = ymd(new Date());
+const ytStatus = v => v.status!=="업로드 완료" && v.plan && v.plan<TODAY ? "지연" : v.status;
+const ytNow = id => { const r=YT.results[id]; return r && r.log.length ? r.log[r.log.length-1] : null; };
+const mmss = s => `${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,"0")}`;
+const dt = s => new Date(s.replace(" ","T"));
+const md2 = s => s ? s.slice(5,10).replace("-","/") : "";
+function since(pub, at){
+  const h = (dt(at)-dt(pub))/36e5;
+  return h<1 ? `${Math.round(h*60)}분` : h<48 ? `${Math.round(h)}시간` : `${Math.round(h/24)}일`;
+}
+// 네오비TV 최근 영상과 비교 — 기간 안에 올라온 채널 영상 TOP 5 + 우리 영상 순위
+let cmpPer = "2w";
+const CMP_PER = {"2w":["최근 2주",d=>d.setDate(d.getDate()-14)],"1m":["최근 1달",d=>d.setMonth(d.getMonth()-1)],"3m":["최근 3개월",d=>d.setMonth(d.getMonth()-3)]};
+function cmpBox(type, ours){
+  const C = YT.compare, from = new Date(C.checked.slice(0,10)); CMP_PER[cmpPer][1](from);
+  const f = ymd(from), cut = C.checked.slice(0,10);
+  const ch = C[type==="롱폼"?"long":"shorts"].filter(x=>x[0]>=f).map(x=>({d:x[0],v:x[1],t:x[2],ctr:x[3],avp:x[4]}));
+  const me = ours.filter(x=>x.v.type===type && x.v.uploaded>=f).map(x=>({d:x.v.uploaded,v:x.n[1],t:x.v.title,ctr:x.n[4],avp:x.n[6],id:x.v.id,me:1}));
+  const all = ch.concat(me).sort((a,b)=>b.v-a.v); all.forEach((x,i)=>x.rk=i+1);
+  const top = all.filter(x=>!x.me).slice(0,5), show = top.concat(all.filter(x=>x.me)).sort((a,b)=>a.rk-b.rk);
+  const age = d => Math.round((new Date(cut)-new Date(d))/864e5);
+  const pc = n => n==null ? '<span class="na">-</span>' : n.toFixed(1)+"%";
+  const rows = show.map((x,i)=>{
+    const gap = i>0 && x.rk-show[i-1].rk>1 ? `<tr><td colspan="6" class="na" style="text-align:center">⋯ ${x.rk-show[i-1].rk-1}개 ⋯</td></tr>` : "";
+    const t = x.me ? `<b><a href="https://youtu.be/${x.id}" target="_blank">${x.t}</a></b> <span class="pill" style="background:${CFG.yt.color}">우리 영상</span>` : x.t;
+    return gap+`<tr${x.me?` style="background:#fff1f1"`:""}><td><b>${x.rk}위</b></td><td class="t">${t}</td><td>${md2(x.d)} <span class="na">(${age(x.d)}일째)</span></td>
+      <td class="r">${fmt(x.v)}</td><td class="r">${pc(x.ctr)}</td><td class="r">${pc(x.avp)}</td></tr>`;
+  }).join("");
+  const mean = (a,k) => { const b=a.filter(x=>x[k]!=null); return b.length ? sum(b,x=>x[k])/b.length : null; };
+  const t5 = {v:mean(top,"v"), ctr:mean(top,"ctr"), avp:mean(top,"avp")};
+  const vs = (lab,m,t,u) => m==null||t==null ? "" : `<div>${lab}<b>${u(m)} <span class="${m>=t?"up":"down"}">${m>=t?"▲":"▼"} TOP5 평균 ${u(t)}</span></b></div>`;
+  const summ = me.length ? `<div class="stats">${me.map(m=>vs("우리 조회수",m.v,t5.v,fmt)+vs("우리 노출 클릭률",m.ctr,t5.ctr,n=>n.toFixed(1)+"%")+vs("우리 평균 시청률",m.avp,t5.avp,n=>Math.round(n)+"%")).join("")}</div>`
+    : `<div class="sub" style="margin:0 0 8px">이 기간에 공개된 우리 ${type}이 아직 없습니다.</div>`;
+  return `<div class="card"><h3>${type} <small>${md2(f)} ~ ${md2(cut)} 채널에 올라온 ${type} ${all.length}개 중 조회수 순</small></h3>${summ}
+    <div class="scroll"><table><tr><th>순위</th><th>제목</th><th>게시일</th><th class="r">조회수</th><th class="r">노출 클릭률</th><th class="r">평균 시청률</th></tr>${rows}</table></div></div>`;
+}
+function drawYT(){
+  const col = CFG.yt.color, S = YT.schedule;
+  const up = S.filter(v=>v.status==="업로드 완료");
+  const now = up.map(v=>({v, r:YT.results[v.id], n:ytNow(v.id)})).filter(x=>x.n);
+  const last = now.map(x=>x.n[0]).sort().pop();
+  document.getElementById("updated").textContent = last || "-";
+  document.getElementById("period").textContent = `${YT.channel} 채널에 올린 우리 영상만 집계 · 게시 이후 누적`;
+  const V = sum(now,x=>x.n[1]), H = sum(now,x=>x.n[2]), I = sum(now,x=>x.n[3]);
+  const ctr = I ? sum(now,x=>x.n[3]*x.n[4]/100)/I*100 : null;
+  const late = S.filter(v=>ytStatus(v)==="지연").length, ready = S.filter(v=>v.status==="제작 완료").length;
+  const card = (l,v,sub)=>`<div class="card kpi"><div class="label">${l}</div><div class="num">${v}</div><div class="na">${sub}</div></div>`;
+  const kpis =
+    card("업로드한 영상", `${up.length}개`, `일정표 ${S.length}개 중 · 업로드 대기 ${ready}개${late?` · <b style="color:#dc2626">지연 ${late}개</b>`:""}`) +
+    card("누적 조회수", fmt(V), "우리 영상 합계") +
+    card("시청 시간", `${H.toFixed(1)}시간`, "우리 영상 합계") +
+    card("노출 클릭률", ctr===null?"-":ctr.toFixed(1)+"%", "우리 영상 · 썸네일을 보고 누른 비율") +
+    card("평균 시청률", now.length?Math.round(avg(now,x=>x.n[6]))+"%":"-", "우리 영상 · 영상 길이 대비 본 비율") +
+    card("구독자 증가", sgn(sum(now,x=>x.n[9])), "우리 영상을 보고 구독");
+
+  const row = v=>{
+    const st = ytStatus(v), n = v.id ? ytNow(v.id) : null;
+    const title = v.id ? `<a href="https://youtu.be/${v.id}" target="_blank">${v.title}</a>` : v.title;
+    return `<tr><td>${v.plan?md2(v.plan):'<span class="na">미정</span>'}</td><td>${v.uploaded?md2(v.uploaded):"-"}</td><td>${v.brand}</td>
+      <td class="t">${title}</td><td><span class="pill" style="background:${ST_COLOR[st]||"#94a3b8"}">${st}</span></td>
+      <td class="r">${n?fmt(n[1]):"-"}</td><td class="r">${n?n[4].toFixed(1)+"%":"-"}</td><td class="r">${n?mmss(n[5])+` (${n[6]}%)`:"-"}</td></tr>`;
+  };
+  // 롱폼·쇼츠를 박스로 나눠 표시
+  const schedBox = type=>{
+    const L = S.filter(v=>v.type===type), done = L.filter(v=>v.status==="업로드 완료").length;
+    return `<div class="row"><div class="card"><h3>${type} <small>${L.length}개 중 업로드 ${done}개 · 제목을 누르면 유튜브로 이동</small></h3>
+      <div class="scroll"><table><tr><th>예정일</th><th>업로드일</th><th>브랜드</th><th>제목</th><th>상태</th><th class="r">조회수</th><th class="r">노출 클릭률</th><th class="r">평균 시청</th></tr>${L.map(row).join("")}</table></div></div></div>`;
+  };
+
+  const results = now.map(({v,r,n},i)=>{
+    const tot = sum(r.sources,s=>s[1]) || 1;
+    const src = r.sources.slice().sort((a,b)=>b[1]-a[1]).map(([k,c])=>[k,c/tot*100]);
+    return `<details class="grpbox"${i===0?" open":""}><summary><span>${v.title}</span><b>${fmt(n[1])}회</b></summary>
+      <div class="sub" style="margin:2px 0 8px">게시 ${md2(r.published)} ${r.published.slice(11)} · 업로드 ${since(r.published,n[0])} 후 기준 (${md2(n[0])} ${n[0].slice(11)} 확인)</div>
+      <div class="stats"><div>조회수<b>${fmt(n[1])}</b></div><div>시청 시간<b>${n[2]}시간</b></div><div>노출수<b>${fmt(n[3])}</b></div>
+        <div>노출 클릭률<b>${n[4]}%</b></div><div>평균 시청<b>${mmss(n[5])} (${n[6]}%)</b></div><div>좋아요<b>${fmt(n[7])}</b></div>
+        <div>댓글<b>${fmt(n[8])}</b></div><div>구독자 증가<b>${sgn(n[9])}</b></div></div>
+      <div class="sub" style="margin:0 0 2px">시청자가 영상을 찾은 경로</div>${srcBars(src,col)}</details>`;
+  }).join("") || `<div class="sub">아직 올라간 영상이 없습니다.</div>`;
+
+  // 확인 기록이 2번 이상 쌓인 영상만 추이 그래프로 (날짜별 마지막 값)
+  const withLog = now.filter(x=>x.r.log.length>1);
+  const days2 = [...new Set(withLog.flatMap(x=>x.r.log.map(l=>l[0].slice(0,10))))].sort();
+
+  document.getElementById("view").innerHTML = `
+    <div class="row kpis">${kpis}</div>
+    <h3 style="font-size:16px;margin:24px 0 4px">영상 등록 일정표</h3>
+    <div class="sub" style="margin:0 0 12px">${Object.entries(ST_COLOR).map(([k,c])=>`<span class="pill" style="background:${c}">${k}</span>`).join(" ")} &nbsp; 예정일이 지났는데 올라가지 않으면 '지연'으로 표시됩니다.</div>
+    ${schedBox("롱폼")}${schedBox("쇼츠")}
+    <div class="row"><div class="card"><h3>영상별 결과 <small>제목을 누르면 상세</small></h3>${results}</div></div>
+    ${days2.length>1?`<div class="row"><div class="card"><h3>조회수 추이 <small>영상별 누적 조회수</small></h3><div class="chart"><canvas id="c1"></canvas></div></div></div>`:""}
+    <h3 style="font-size:16px;margin:24px 0 4px">${YT.channel} 최근 영상과 비교</h3>
+    <div class="controls" style="margin:8px 0 12px">${Object.entries(CMP_PER).map(([k,[l]])=>`<button class="${cmpPer===k?"on":""}" onclick="cmpPer='${k}';draw()">${l}</button>`).join("")}
+      <span class="period">기간 안에 채널에 올라온 영상 TOP 5와 우리 영상 · 우리 영상은 빨간 줄</span></div>
+    <div class="row">${cmpBox("롱폼",now)}</div><div class="row">${cmpBox("쇼츠",now)}</div>
+    <div class="sub">조회수는 올린 지 오래될수록 쌓이므로 '며칠째'를 함께 보세요. 노출 클릭률·평균 시청률은 기간과 상관없이 비교할 수 있는 숫자입니다. 쇼츠는 대부분 피드에서 바로 재생되어 클릭률보다 평균 시청률(100% 넘으면 반복 시청)이 중요합니다.<br>
+      ${YT.channel} 영상 조회수는 ${md2(YT.compare.checked)} ${YT.compare.checked.slice(11)} 스튜디오 콘텐츠 목록, 클릭률·시청률은 스튜디오 분석(${md2(YT.compare.statsTo)}까지 집계) 기준입니다.</div>
+    <div class="sub" style="margin-top:8px">${YT.channel} 채널 전체 숫자는 네오비 영상이 섞여 있어 빼고, 우리가 올린 영상만 집계합니다. 수치는 YouTube 스튜디오 동영상 분석에서 옮겨 적으며, 업데이트는 data.js의 YT에 반영합니다.</div>`;
+
+  if(days2.length>1){
+    const pal = [col,"#2f5bea","#f59e0b","#8b5cf6","#03a94d","#94a3b8"];
+    const ds = withLog.map((x,i)=>{
+      const byDay = new Map(x.r.log.map(l=>[l[0].slice(0,10),l[1]]));
+      return {label:x.v.title.slice(0,24),data:days2.map(d=>byDay.has(d)?byDay.get(d):null),borderColor:pal[i%pal.length],backgroundColor:pal[i%pal.length]+"22",tension:.3,spanGaps:true,pointRadius:3};
+    });
+    charts.push(new Chart(document.getElementById("c1"),{type:"line",data:{labels:days2.map(md2),datasets:ds},options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}}));
+  }
+}
+function draw(){
+  charts.forEach(c=>c.destroy()); charts=[];
+  renderTabs();
+  const badge = document.getElementById("sampleBadge");
+  badge.style.display = tab==="link" && !LINKS_REAL.length ? "" : "none";
+  badge.textContent = "⚠ 예시 화면입니다 — 링크를 data.js에 넣으면 실제 숫자로 바뀝니다";
+  document.getElementById("range").style.display = tab==="yt" ? "none" : "";
+  document.getElementById("updated").textContent = BLOG.updated;
+  if(tab==="blog") drawBlog(); else if(tab==="link") drawLinks(); else drawYT();
+}
+draw();
+</script>
+</body>
+</html>
