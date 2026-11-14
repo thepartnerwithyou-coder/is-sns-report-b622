@@ -102,6 +102,7 @@ const CFG = {
 let tab=CFG[location.hash.slice(1)]?location.hash.slice(1):"blog", days=7, charts=[], trend="30d";
 const fmt = n => Math.round(n).toLocaleString("ko-KR");
 const sgn = n => (n>=0?"+":"")+fmt(n);
+const nv = (x,f) => x==null ? "-" : f(x);  // 스튜디오에서 못 읽고 공개 숫자만 적은 칸(null)은 "-"
 const md = d => `${d.getMonth()+1}/${d.getDate()}`;
 const sum = (a,f) => a.reduce((x,y)=>x+f(y),0);
 const avg = (a,f) => a.length ? sum(a,f)/a.length : 0;
@@ -377,7 +378,7 @@ function drawYT(){
     card("누적 조회수", fmt(V), "우리 영상 합계") +
     card("시청 시간", `${H.toFixed(1)}시간`, "우리 영상 합계") +
     card("노출 클릭률", ctr===null?"-":ctr.toFixed(1)+"%", "우리 영상 · 썸네일을 보고 누른 비율") +
-    card("평균 시청률", now.length?Math.round(avg(now,x=>x.n[6]))+"%":"-", "우리 영상 · 영상 길이 대비 본 비율") +
+    card("평균 시청률", now.some(x=>x.n[6]!=null)?Math.round(avg(now.filter(x=>x.n[6]!=null),x=>x.n[6]))+"%":"-", "우리 영상 · 영상 길이 대비 본 비율") +
     card("구독자 증가", sgn(sum(now,x=>x.n[9])), "우리 영상을 보고 구독");
 
   const row = v=>{
@@ -385,7 +386,7 @@ function drawYT(){
     const title = v.id ? `<a href="https://youtu.be/${v.id}" target="_blank">${v.title}</a>` : v.title;
     return `<tr><td>${v.plan?md2(v.plan):'<span class="na">미정</span>'}</td><td>${v.uploaded?md2(v.uploaded):"-"}</td><td>${v.brand}</td>
       <td class="t">${title}</td><td><span class="pill" style="background:${ST_COLOR[st]||"#94a3b8"}">${st}</span></td>
-      <td class="r">${n?fmt(n[1]):"-"}</td><td class="r">${n?n[4].toFixed(1)+"%":"-"}</td><td class="r">${n?mmss(n[5])+` (${n[6]}%)`:"-"}</td></tr>`;
+      <td class="r">${n?fmt(n[1]):"-"}</td><td class="r">${n&&n[4]!=null?n[4].toFixed(1)+"%":"-"}</td><td class="r">${n&&n[5]!=null?mmss(n[5])+` (${n[6]}%)`:"-"}</td></tr>`;
   };
   // 롱폼·쇼츠를 박스로 나눠 표시
   const schedBox = type=>{
@@ -399,10 +400,10 @@ function drawYT(){
     const src = r.sources.slice().sort((a,b)=>b[1]-a[1]).map(([k,c])=>[k,c/tot*100]);
     return `<details class="grpbox"${i===0?" open":""}><summary><span>${v.title}</span><b>${fmt(n[1])}회</b></summary>
       <div class="sub" style="margin:2px 0 8px">게시 ${md2(r.published)} ${r.published.slice(11)} · 업로드 ${since(r.published,n[0])} 후 기준 (${md2(n[0])} ${n[0].slice(11)} 확인)</div>
-      <div class="stats"><div>조회수<b>${fmt(n[1])}</b></div><div>시청 시간<b>${n[2]}시간</b></div><div>노출수<b>${fmt(n[3])}</b></div>
-        <div>노출 클릭률<b>${n[4]}%</b></div><div>평균 시청<b>${mmss(n[5])} (${n[6]}%)</b></div><div>좋아요<b>${fmt(n[7])}</b></div>
-        <div>댓글<b>${fmt(n[8])}</b></div><div>구독자 증가<b>${sgn(n[9])}</b></div></div>
-      <div class="sub" style="margin:0 0 2px">시청자가 영상을 찾은 경로</div>${srcBars(src,col)}</details>`;
+      <div class="stats"><div>조회수<b>${fmt(n[1])}</b></div><div>시청 시간<b>${nv(n[2],x=>x+"시간")}</b></div><div>노출수<b>${nv(n[3],fmt)}</b></div>
+        <div>노출 클릭률<b>${nv(n[4],x=>x+"%")}</b></div><div>평균 시청<b>${n[5]==null?"-":`${mmss(n[5])} (${n[6]}%)`}</b></div><div>좋아요<b>${nv(n[7],fmt)}</b></div>
+        <div>댓글<b>${nv(n[8],fmt)}</b></div><div>구독자 증가<b>${nv(n[9],sgn)}</b></div></div>${r.note?`<div class="sub" style="margin:0 0 8px">${r.note}</div>`:""}
+      ${r.sources.length?`<div class="sub" style="margin:0 0 2px">시청자가 영상을 찾은 경로</div>${srcBars(src,col)}`:""}</details>`;
   }).join("") || `<div class="sub">아직 올라간 영상이 없습니다.</div>`;
 
   // 확인 기록이 2번 이상 쌓인 영상만 추이 그래프로 (날짜별 마지막 값)
