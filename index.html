@@ -328,7 +328,9 @@ function drawLinks(){
 const ST_COLOR = {"업로드 완료":"#16a34a","비공개 업로드":"#7c3aed","제작 완료":"#2f5bea","제작 중":"#f59e0b","기획 중":"#94a3b8","지연":"#dc2626"};
 const TODAY = ymd(new Date());
 const ytStatus = v => v.status!=="업로드 완료" && v.plan && v.plan<TODAY ? "지연" : v.status;
-const ytNow = id => { const r=YT.results[id]; return r && r.log.length ? r.log[r.log.length-1] : null; };
+// 맨 아래 줄이 현재값. 공개 페이지로만 확인해 비어 있는(null) 칸은 그 전 스튜디오 확인값을 이어서 씀
+const ytNow = id => { const r=YT.results[id]; if(!r || !r.log.length) return null;
+  return r.log[r.log.length-1].map((v,i)=>{ if(v!=null) return v; for(let j=r.log.length-2;j>=0;j--) if(r.log[j][i]!=null) return r.log[j][i]; return null; }); };
 const mmss = s => `${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,"0")}`;
 const dt = s => new Date(s.replace(" ","T"));
 const md2 = s => s ? s.slice(5,10).replace("-","/") : "";
