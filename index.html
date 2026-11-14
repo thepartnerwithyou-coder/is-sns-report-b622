@@ -324,7 +324,7 @@ function drawLinks(){
   charts.push(new Chart(document.getElementById("c1"),{type:"bar",data:{labels,datasets:ds},options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}}));
 }
 // ===== 유튜브: 영상 등록 일정표 + 영상별 결과 (네오비TV 채널 중 우리 영상만) =====
-const ST_COLOR = {"업로드 완료":"#16a34a","제작 완료":"#2f5bea","제작 중":"#f59e0b","기획 중":"#94a3b8","지연":"#dc2626"};
+const ST_COLOR = {"업로드 완료":"#16a34a","비공개 업로드":"#7c3aed","제작 완료":"#2f5bea","제작 중":"#f59e0b","기획 중":"#94a3b8","지연":"#dc2626"};
 const TODAY = ymd(new Date());
 const ytStatus = v => v.status!=="업로드 완료" && v.plan && v.plan<TODAY ? "지연" : v.status;
 const ytNow = id => { const r=YT.results[id]; return r && r.log.length ? r.log[r.log.length-1] : null; };
@@ -370,7 +370,7 @@ function drawYT(){
   document.getElementById("period").textContent = `${YT.channel} 채널에 올린 우리 영상만 집계 · 게시 이후 누적`;
   const V = sum(now,x=>x.n[1]), H = sum(now,x=>x.n[2]), I = sum(now,x=>x.n[3]);
   const ctr = I ? sum(now,x=>x.n[3]*x.n[4]/100)/I*100 : null;
-  const late = S.filter(v=>ytStatus(v)==="지연").length, ready = S.filter(v=>v.status==="제작 완료").length;
+  const late = S.filter(v=>ytStatus(v)==="지연").length, ready = S.filter(v=>v.status==="제작 완료"||v.status==="비공개 업로드").length;
   const card = (l,v,sub)=>`<div class="card kpi"><div class="label">${l}</div><div class="num">${v}</div><div class="na">${sub}</div></div>`;
   const kpis =
     card("업로드한 영상", `${up.length}개`, `일정표 ${S.length}개 중 · 업로드 대기 ${ready}개${late?` · <b style="color:#dc2626">지연 ${late}개</b>`:""}`) +
