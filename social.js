@@ -616,7 +616,7 @@ const SOCIAL = {
     "shares": 0
    }
   ],
-  "updated": "2026-11-18 11:21"
+  "updated": "2026-11-18 12:36"
  },
  "tt": {
   "account": "neob_officail",
@@ -1281,9 +1281,9 @@ const SOCIAL = {
     "saves": null
    }
   ],
-  "updated": "2026-11-18 12:33",
+  "updated": "2026-11-18 12:37",
   "source": "공식 통계",
-  "videosChecked": "2026-11-18 12:33"
+  "videosChecked": "2026-11-18 12:37"
  },
  "yt": {
   "daily": {
