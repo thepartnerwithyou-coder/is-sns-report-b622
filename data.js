@@ -98,35 +98,39 @@ const YT = {
   results: {
     "JkT9AnFXLFA": {
       published: "2026-11-17 18:30",
-      log: [["2026-11-18 12:36",332,null,null,null,null,null,5,null,null]],
+      log: [["2026-11-18 12:36",332,null,null,null,null,null,5,null,null],
+            ["2026-11-18 17:00",373,null,null,null,null,null,6,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/18 12:36 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/18 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
     "nKEjdzGH_ek": {
       published: "2026-11-11 18:30",
       log: [["2026-11-11 18:40",22,0.3,7,14.3,102,28,0,0,0],
             ["2026-11-12 15:11",401,6.6,1500,5.5,148,41,6,2,-1],
             ["2026-11-14 19:19",553,null,null,null,null,null,6,null,null],
-            ["2026-11-18 12:36",693,null,null,null,null,null,7,null,null]],
+            ["2026-11-18 12:36",693,null,null,null,null,null,7,null,null],
+            ["2026-11-18 17:00",700,null,null,null,null,null,7,null,null]],
       sources: [["탐색 기능",317],["알림",26],["기타",58]],
-      note: "조회수·좋아요는 11/18 12:36 공개 페이지 기준, 시청시간·노출·클릭률·평균 시청·댓글·구독은 11/12 15:11 스튜디오 확인값"
+      note: "조회수·좋아요는 11/18 17:00 공개 페이지 기준, 시청시간·노출·클릭률·평균 시청·댓글·구독은 11/12 15:11 스튜디오 확인값"
     },
     // 스튜디오(크롬 확장) 연결이 안 될 때는 공개 페이지 숫자(조회수·좋아요)만 적고 나머지는 null → 화면에 "-"
     "IBrG8XjfaZA": {
       published: "2026-11-12 18:30",
       log: [["2026-11-14 18:10",897,null,null,null,null,null,8,null,null],
             ["2026-11-14 19:19",914,null,null,null,null,null,8,null,null],
-            ["2026-11-18 12:36",1060,null,null,null,null,null,8,null,null]],
+            ["2026-11-18 12:36",1060,null,null,null,null,null,8,null,null],
+            ["2026-11-18 17:00",1060,null,null,null,null,null,8,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/18 12:36 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/18 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
     "i_tVqryxVKs": {
       published: "2026-11-14 18:30",
       log: [["2026-11-14 18:32",0,null,null,null,null,null,null,null,null],
             ["2026-11-14 19:19",86,null,null,null,null,null,0,null,null],
-            ["2026-11-18 12:36",721,null,null,null,null,null,4,null,null]],
+            ["2026-11-18 12:36",721,null,null,null,null,null,4,null,null],
+            ["2026-11-18 17:00",752,null,null,null,null,null,4,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/18 12:36 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/18 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     }
   },
   // 네오비TV 채널 비교 — 최근 3개월 동안 채널에 올라온 영상(우리 영상 제외). 유튜브 탭 '네오비TV 최근 영상과 비교'에 표시

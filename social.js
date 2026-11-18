@@ -19,7 +19,7 @@ const SOCIAL = {
     14,
     2,
     2,
-    0
+    null
    ],
    [
     "2026-10-20",
@@ -251,7 +251,7 @@ const SOCIAL = {
     168,
     2,
     2,
-    null
+    0
    ]
   ],
   "posts": [
@@ -616,7 +616,7 @@ const SOCIAL = {
     "shares": 0
    }
   ],
-  "updated": "2026-11-18 12:36"
+  "updated": "2026-11-18 17:00"
  },
  "tt": {
   "account": "neob_officail",
@@ -999,7 +999,7 @@ const SOCIAL = {
     "date": "2026-09-08 18:30",
     "title": "전입신고 안 하는 조건의 오피스텔 계약, 해도 될까? ⭐대한민국 1등 부동산 중개실무 교육 네오비 ✅네오비 …",
     "url": "https://www.tiktok.com/@neob_officail/video/7682669714757192967",
-    "views": 135,
+    "views": 136,
     "likes": 1,
     "comments": 0,
     "shares": 0,
@@ -1281,9 +1281,9 @@ const SOCIAL = {
     "saves": null
    }
   ],
-  "updated": "2026-11-18 12:37",
+  "updated": "2026-11-18 17:01",
   "source": "공식 통계",
-  "videosChecked": "2026-11-18 12:37"
+  "videosChecked": "2026-11-18 17:01"
  },
  "yt": {
   "daily": {
