@@ -7,6 +7,7 @@
 <title>SNS 성과 대시보드</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <script src="data.js"></script>
+<script src="social.js"></script>
 <style>
   :root { --bg:#f6f7f9; --card:#fff; --ink:#1c2430; --mute:#6b7685; --line:#e4e7ec; }
   * { box-sizing:border-box; }
@@ -64,7 +65,7 @@
 <header>
   <div>
     <h1>SNS 성과 대시보드</h1>
-    <div class="sub">네이버 블로그 · 유튜브 | 마지막 업데이트: <span id="updated"></span></div>
+    <div class="sub">네이버 블로그 · 유튜브 · 인스타그램 · 틱톡 | 마지막 업데이트: <span id="updated"></span></div>
   </div>
   <div class="sample" id="sampleBadge" style="display:none"></div>
 </header>
@@ -96,9 +97,11 @@ function makeDays(start, end){
 const CFG = {
   blog:{name:"네이버 블로그", color:"#03a94d"},
   yt:  {name:"유튜브",        color:"#e03131"},
+  ig:  {name:"인스타그램",    color:"#d6249f"},
+  tt:  {name:"틱톡",          color:"#111827"},
   link:{name:"링크·가입 전환", color:"#2f5bea"}
 };
-// 주소 끝에 #yt / #link 를 붙이면 그 탭으로 바로 열림 (주간보고 캡처용)
+// 주소 끝에 #yt / #ig / #tt / #link 를 붙이면 그 탭으로 바로 열림 (주간보고 캡처용)
 let tab=CFG[location.hash.slice(1)]?location.hash.slice(1):"blog", days=7, charts=[], trend="30d";
 const fmt = n => Math.round(n).toLocaleString("ko-KR");
 const sgn = n => (n>=0?"+":"")+fmt(n);
@@ -108,7 +111,7 @@ const sum = (a,f) => a.reduce((x,y)=>x+f(y),0);
 const avg = (a,f) => a.length ? sum(a,f)/a.length : 0;
 
 function renderTabs(){
-  document.getElementById("tabs").innerHTML = ["blog","yt","link"].map(k=>`<button class="${tab===k?"on":""}" onclick="tab='${k}';draw()">${CFG[k].name}</button>`).join("");
+  document.getElementById("tabs").innerHTML = ["blog","yt","ig","tt","link"].map(k=>`<button class="${tab===k?"on":""}" onclick="tab='${k}';draw()">${CFG[k].name}</button>`).join("");
 }
 function delta(cur, prev, prevOk){
   if(!prevOk) return `<div class="na">비교할 이전 기간 없음</div>`;
@@ -411,14 +414,19 @@ function drawYT(){
   // 확인 기록이 2번 이상 쌓인 영상만 추이 그래프로 (날짜별 마지막 값)
   const withLog = now.filter(x=>x.r.log.length>1);
   const days2 = [...new Set(withLog.flatMap(x=>x.r.log.map(l=>l[0].slice(0,10))))].sort();
+  // 스튜디오에서 읽은 날짜별 조회수 (social.js SOCIAL.yt.daily, tools/youtube_daily.py)
+  const yd = (typeof SOCIAL!=="undefined" && SOCIAL.yt && SOCIAL.yt.daily) || {};
+  const ydIds = S.filter(v=>v.id && yd[v.id]).map(v=>v);
+  const YD = ydIds.length ? {vids:ydIds, days:[...new Set(ydIds.flatMap(v=>yd[v.id].map(r=>r[0])))].sort()} : null;
 
   document.getElementById("view").innerHTML = `
     <div class="row kpis">${kpis}</div>
+    ${YD?`<div class="row"><div class="card"><h3>일별 조회수 <small>영상별 선 · 점선은 하루 합계 · 스튜디오 집계 ${dash(YD.days[YD.days.length-1])}까지 (스튜디오는 이틀 늦게 집계)</small></h3><div class="chart"><canvas id="c0"></canvas></div></div></div>`:""}
+    ${!YD&&days2.length>1?`<div class="row"><div class="card"><h3>조회수 추이 <small>영상별 누적 조회수 · 확인한 날마다 한 점</small></h3><div class="chart"><canvas id="c1"></canvas></div></div></div>`:""}
     <h3 style="font-size:16px;margin:24px 0 4px">영상 등록 일정표</h3>
     <div class="sub" style="margin:0 0 12px">${Object.entries(ST_COLOR).map(([k,c])=>`<span class="pill" style="background:${c}">${k}</span>`).join(" ")} &nbsp; 예정일이 지났는데 올라가지 않으면 '지연'으로 표시됩니다.</div>
     ${schedBox("롱폼")}${schedBox("쇼츠")}
     <div class="row"><div class="card"><h3>영상별 결과 <small>제목을 누르면 상세</small></h3>${results}</div></div>
-    ${days2.length>1?`<div class="row"><div class="card"><h3>조회수 추이 <small>영상별 누적 조회수</small></h3><div class="chart"><canvas id="c1"></canvas></div></div></div>`:""}
     <h3 style="font-size:16px;margin:24px 0 4px">${YT.channel} 최근 영상과 비교</h3>
     <div class="controls" style="margin:8px 0 12px">${Object.entries(CMP_PER).map(([k,[l]])=>`<button class="${cmpPer===k?"on":""}" onclick="cmpPer='${k}';draw()">${l}</button>`).join("")}
       <span class="period">기간 안에 채널에 올라온 영상 TOP 5와 우리 영상 · 우리 영상은 빨간 줄</span></div>
@@ -427,8 +435,15 @@ function drawYT(){
       ${YT.channel} 영상 조회수는 ${md2(YT.compare.checked)} ${YT.compare.checked.slice(11)} 스튜디오 콘텐츠 목록, 클릭률·시청률은 스튜디오 분석(${md2(YT.compare.statsTo)}까지 집계) 기준입니다.</div>
     <div class="sub" style="margin-top:8px">${YT.channel} 채널 전체 숫자는 네오비 영상이 섞여 있어 빼고, 우리가 올린 영상만 집계합니다. 수치는 YouTube 스튜디오 동영상 분석에서 옮겨 적으며, 업데이트는 data.js의 YT에 반영합니다.</div>`;
 
-  if(days2.length>1){
-    const pal = [col,"#2f5bea","#f59e0b","#8b5cf6","#03a94d","#94a3b8"];
+  const pal = [col,"#2f5bea","#f59e0b","#8b5cf6","#03a94d","#94a3b8"];
+  if(YD){
+    // 영상별 선 + 하루 합계 점선 (공개 전 날짜는 비워 둠)
+    const ds = YD.vids.map((v,i)=>{ const m=new Map(yd[v.id]); return {label:v.title.slice(0,24),data:YD.days.map(d=>m.has(d)?m.get(d):null),borderColor:pal[i%pal.length],backgroundColor:pal[i%pal.length]+"22",tension:.3,pointRadius:3}; });
+    ds.push({label:"하루 합계",data:YD.days.map(d=>sum(YD.vids,v=>(new Map(yd[v.id])).get(d)||0)),borderColor:"#94a3b8",borderDash:[5,4],tension:.3,pointRadius:3});
+    charts.push(new Chart(document.getElementById("c0"),{type:"line",data:{labels:YD.days.map(dash),datasets:ds},
+      options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true}},plugins:{tooltip:{mode:"index",intersect:false}}}}));
+  }
+  if(!YD&&days2.length>1){
     const ds = withLog.map((x,i)=>{
       const byDay = new Map(x.r.log.map(l=>[l[0].slice(0,10),l[1]]));
       return {label:x.v.title.slice(0,24),data:days2.map(d=>byDay.has(d)?byDay.get(d):null),borderColor:pal[i%pal.length],backgroundColor:pal[i%pal.length]+"22",tension:.3,spanGaps:true,pointRadius:3};
@@ -436,15 +451,84 @@ function drawYT(){
     charts.push(new Chart(document.getElementById("c1"),{type:"line",data:{labels:days2.map(md2),datasets:ds},options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}}));
   }
 }
+// ===== 인스타그램 (회사 계정, 메타 공식 통로 · tools/instagram_stats.py가 social.js에 씀) =====
+const dash = s => s.slice(5,10).replace("-","/");
+const nz = x => x==null ? '<span class="na">-</span>' : fmt(x);
+function postWeeks(list, unit, cols, rowFn){
+  const weeks = new Map();
+  list.forEach(p=>{ const w=weekLabel(p.date.slice(0,10)); if(!weeks.has(w.key)) weeks.set(w.key,{label:w.label,items:[]}); weeks.get(w.key).items.push(p); });
+  return [...weeks.entries()].sort((a,b)=>b[0]-a[0]).map(([key,w],wi)=>`<details class="grpbox"${wi===0?" open":""}><summary><span>${w.label} <small style="color:var(--mute);font-weight:400">${unit} ${w.items.length}개</small></span><b>${fmt(sum(w.items,p=>p.views||0))}회</b></summary>
+    <div class="scroll"><table><tr>${cols}</tr>${w.items.map(rowFn).join("")}</table></div></details>`).join("");
+}
+function drawIG(){
+  const S = SOCIAL.ig, col = CFG.ig.color, H = S.history, F = H[H.length-1];
+  const D = S.daily.map(r=>({date:new Date(r[0]),reach:r[1],views:r[2],eng:r[3],act:r[4],newf:r[5]}));
+  const cur = D.slice(-days), prev = D.slice(0,D.length-cur.length).slice(-days), prevOk = prev.length===cur.length;
+  document.getElementById("updated").textContent = S.updated;
+  document.getElementById("period").textContent = `${md(cur[0].date)} ~ ${md(cur[cur.length-1].date)} (어제까지)` + (cur.length<days?` · 인스타는 최근 ${D.length}일치만 기록됨`:"");
+  const s0 = ymd(cur[0].date), posted = S.posts.filter(p=>p.date.slice(0,10)>=s0);
+  const newf = sum(cur,f=>f.newf||0);
+  const card = (l,v,sub)=>`<div class="card kpi"><div class="label">${l}</div><div class="num">${v}</div>${sub}</div>`;
+  const kpis =
+    card("팔로워", fmt(F[1]), `<div class="na">기간 중 새 팔로워 +${fmt(newf)}</div>`) +
+    // 직전 기간이 거의 0이면 % 가 수천%로 튀므로 회수로 보여줌
+    card("조회수", fmt(sum(cur,f=>f.views)), prevOk && sum(prev,f=>f.views)<50 ? `<div class="na">직전 ${days}일 ${fmt(sum(prev,f=>f.views))}회</div>` : delta(sum(cur,f=>f.views),sum(prev,f=>f.views),prevOk)) +
+    card("하루 평균 도달", fmt(avg(cur,f=>f.reach)), `<div class="na">하루에 본 사람 수(중복 제외) 평균</div>`) +
+    card("반응", fmt(sum(cur,f=>f.act)), `<div class="na">좋아요·댓글·저장·공유 합계</div>`) +
+    card("올린 게시물", `${posted.length}개`, `<div class="na">기간 중 · 전체 ${fmt(F[3])}개</div>`);
+  const cols = `<th>내용 (첫 줄)</th><th>게시일</th><th>형식</th><th class="r">조회</th><th class="r">도달</th><th class="r">좋아요</th><th class="r">댓글</th><th class="r">저장</th><th class="r">공유</th>`;
+  const row = p=>`<tr><td class="t"><a href="${p.url}" target="_blank">${p.title}</a></td><td>${dash(p.date)}</td><td>${p.type}</td>
+    <td class="r">${nz(p.views)}</td><td class="r">${nz(p.reach)}</td><td class="r">${nz(p.likes)}</td><td class="r">${nz(p.comments)}</td><td class="r">${nz(p.saved)}</td><td class="r">${nz(p.shares)}</td></tr>`;
+  const best = S.posts.filter(p=>p.views!=null).sort((a,b)=>b.views-a.views).slice(0,5);
+  document.getElementById("view").innerHTML = `
+    <div class="row kpis">${kpis}</div>
+    <div class="row"><div class="card"><h3>일별 조회·도달 <small>선택 기간 · 한국 날짜 기준</small></h3><div class="chart"><canvas id="c1"></canvas></div></div></div>
+    <div class="row"><div class="card"><h3>게시물별 성과 <small>최근 ${S.posts.length}개 · 주차를 누르면 목록, 내용을 누르면 인스타로 이동</small></h3>${postWeeks(S.posts,"게시물",cols,row)}</div></div>
+    <div class="row"><div class="card"><h3>조회수 TOP 5 <small>최근 ${S.posts.length}개 게시물 중</small></h3><div class="scroll"><table><tr>${cols}</tr>${best.map(row).join("")}</table></div></div></div>
+    <div class="sub" style="margin-top:8px">계정 <a href="${S.url}" target="_blank">@${S.account}</a> · 인스타그램 공식 통계(읽기 전용 연결)에서 자동으로 가져온 숫자이며, ${S.updated} 기준입니다.
+      게시물 숫자는 올린 날부터 누적입니다. 새 팔로워는 인스타 기준 날짜(미국 시간)로 집계되어 하루 정도 어긋날 수 있습니다.</div>`;
+  charts.push(new Chart(document.getElementById("c1"),{type:"line",data:{labels:cur.map(f=>md(f.date)),datasets:[
+    {label:"조회수",data:cur.map(f=>f.views),borderColor:col,backgroundColor:col+"22",fill:true,tension:.3,pointRadius:3},
+    {label:"도달한 계정",data:cur.map(f=>f.reach),borderColor:"#94a3b8",borderDash:[5,4],tension:.3,pointRadius:3}]},options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}}));
+}
+// ===== 틱톡 (공개 프로필 · tools/tiktok_stats.py가 social.js에 씀) =====
+function drawTT(){
+  const S = SOCIAL.tt, col = CFG.tt.color, H = S.history, F = H[H.length-1], B = H[0];
+  document.getElementById("updated").textContent = S.updated;
+  document.getElementById("period").textContent = H.length>1 ? `기록 시작 ${dash(B[0])} 이후 변화` : `${dash(F[0])} 첫 기록 · 다음 갱신부터 변화가 표시됩니다`;
+  const chg = (i)=> H.length>1 ? `<div class="${F[i]>=B[i]?"up":"down"}">${dash(B[0])} 이후 ${sgn(F[i]-B[i])}</div>` : `<div class="na">${dash(F[0])} 첫 기록</div>`;
+  const card = (l,v,sub)=>`<div class="card kpi"><div class="label">${l}</div><div class="num">${v}</div>${sub}</div>`;
+  const kpis = card("팔로워",fmt(F[1]),chg(1)) + card("받은 좋아요 합계",fmt(F[2]),chg(2)) + card("올린 영상",`${fmt(F[3])}개`,chg(3));
+  const V = S.videos||[];
+  const cols = `<th>내용 (첫 줄)</th><th>게시일</th><th class="r">조회</th><th class="r">좋아요</th><th class="r">댓글</th><th class="r">공유</th>`;
+  const row = v=>`<tr><td class="t"><a href="${v.url}" target="_blank">${v.title}</a></td><td>${dash(v.date)}</td><td class="r">${nz(v.views)}</td><td class="r">${nz(v.likes)}</td><td class="r">${nz(v.comments)}</td><td class="r">${nz(v.shares)}</td></tr>`;
+  const vids = V.length ? postWeeks(V,"영상",cols,row) + `<div class="sub" style="margin-top:8px">영상별 숫자 ${S.videosChecked} 확인</div>`
+    : `<div class="sub">영상별 숫자가 아직 없습니다. 틱톡 공식 연결(tools/tiktok_auth.py) 후 자동으로 채워집니다.</div>`;
+  document.getElementById("view").innerHTML = `
+    <div class="row kpis">${kpis}</div>
+    ${V.length?`<div class="row"><div class="card"><h3>영상별 조회수 <small>게시일 순 · 최근 ${V.length}개 · 점선은 평균</small></h3><div class="chart"><canvas id="c0"></canvas></div></div></div>`:""}
+    ${H.length>1?`<div class="row"><div class="card"><h3>팔로워 추이 <small>갱신할 때마다 한 점</small></h3><div class="chart"><canvas id="c1"></canvas></div></div></div>`:""}
+    <div class="row"><div class="card"><h3>영상별 성과</h3>${vids}</div></div>
+    <div class="sub" style="margin-top:8px">계정 <a href="${S.url}" target="_blank">@${S.account}</a> · 틱톡 ${S.source||"공개 프로필"}에서 자동으로 가져온 숫자이며, ${S.updated} 기준입니다. 매주 토요일 자동 보고 때 함께 갱신됩니다.</div>`;
+  if(V.length){
+    const asc = V.slice().sort((a,b)=>a.date<b.date?-1:1), mean = avg(asc,v=>v.views||0);
+    charts.push(new Chart(document.getElementById("c0"),{type:"line",data:{labels:asc.map(v=>dash(v.date)),datasets:[
+      {label:"조회수",data:asc.map(v=>v.views),borderColor:col,backgroundColor:col+"22",fill:true,tension:.3,pointRadius:3},
+      {label:"평균 "+fmt(mean),data:asc.map(()=>mean),borderColor:"#94a3b8",borderDash:[5,4],pointRadius:0}]},
+      options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}}));
+  }
+  if(H.length>1) charts.push(new Chart(document.getElementById("c1"),{type:"line",data:{labels:H.map(h=>dash(h[0])),datasets:[
+    {label:"팔로워",data:H.map(h=>h[1]),borderColor:col,backgroundColor:col+"22",fill:true,tension:.3,pointRadius:3}]},options:{maintainAspectRatio:false}}));
+}
 function draw(){
   charts.forEach(c=>c.destroy()); charts=[];
   renderTabs();
   const badge = document.getElementById("sampleBadge");
   badge.style.display = tab==="link" && !LINKS_REAL.length ? "" : "none";
   badge.textContent = "⚠ 예시 화면입니다 — 링크를 data.js에 넣으면 실제 숫자로 바뀝니다";
-  document.getElementById("range").style.display = tab==="yt" ? "none" : "";
+  document.getElementById("range").style.display = tab==="yt"||tab==="tt" ? "none" : "";
   document.getElementById("updated").textContent = BLOG.updated;
-  if(tab==="blog") drawBlog(); else if(tab==="link") drawLinks(); else drawYT();
+  if(tab==="blog") drawBlog(); else if(tab==="link") drawLinks(); else if(tab==="ig") drawIG(); else if(tab==="tt") drawTT(); else drawYT();
 }
 draw();
 </script>
