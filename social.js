@@ -10,6 +10,12 @@ const SOCIAL = {
     269,
     110,
     145
+   ],
+   [
+    "2026-11-19",
+    269,
+    110,
+    145
    ]
   ],
   "daily": [
@@ -27,7 +33,7 @@ const SOCIAL = {
     344,
     4,
     4,
-    0
+    null
    ],
    [
     "2026-10-21",
@@ -252,6 +258,14 @@ const SOCIAL = {
     2,
     2,
     0
+   ],
+   [
+    "2026-11-18",
+    9,
+    29,
+    1,
+    1,
+    0
    ]
   ],
   "posts": [
@@ -260,9 +274,9 @@ const SOCIAL = {
     "type": "릴스",
     "title": "AI가 어디까지 할 수 있을까요?",
     "url": "https://www.instagram.com/reel/Df1r2hLhVQH/",
-    "views": 149,
-    "reach": 126,
-    "likes": 1,
+    "views": 158,
+    "reach": 131,
+    "likes": 2,
     "comments": 0,
     "saved": 0,
     "shares": 0
@@ -272,8 +286,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "AI 활용, 어디까지 알고 계십니까?",
     "url": "https://www.instagram.com/reel/DfzCofZgmfb/",
-    "views": 154,
-    "reach": 124,
+    "views": 160,
+    "reach": 127,
     "likes": 2,
     "comments": 0,
     "saved": 0,
@@ -284,7 +298,7 @@ const SOCIAL = {
     "type": "릴스",
     "title": "계약 끝났다고 고객 관리도 끝내셨나요?\" 🤦‍♂️",
     "url": "https://www.instagram.com/reel/Det5ClTEYza/",
-    "views": 405,
+    "views": 406,
     "reach": 343,
     "likes": 6,
     "comments": 2,
@@ -296,8 +310,8 @@ const SOCIAL = {
     "type": "여러 장",
     "title": "오늘은 협회 강의 중입니다! 😊",
     "url": "https://www.instagram.com/p/Dei_GYUEhtO/",
-    "views": 167,
-    "reach": 77,
+    "views": 168,
+    "reach": 78,
     "likes": 6,
     "comments": 0,
     "saved": 0,
@@ -308,8 +322,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "실무를 배우고 싶은데, 받아주는 곳이 없다면? 🤔",
     "url": "https://www.instagram.com/reel/Dearm9mgJrW/",
-    "views": 215,
-    "reach": 177,
+    "views": 217,
+    "reach": 178,
     "likes": 7,
     "comments": 0,
     "saved": 0,
@@ -320,8 +334,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "9월 16일, 실제 특강 현장입니다",
     "url": "https://www.instagram.com/reel/DeOBbLkxjE0/",
-    "views": 175,
-    "reach": 143,
+    "views": 176,
+    "reach": 144,
     "likes": 2,
     "comments": 0,
     "saved": 0,
@@ -332,8 +346,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "9월 16일, 실제 특강 현장입니다!",
     "url": "https://www.instagram.com/reel/DeLTmczAvXA/",
-    "views": 189,
-    "reach": 163,
+    "views": 190,
+    "reach": 164,
     "likes": 1,
     "comments": 0,
     "saved": 0,
@@ -344,8 +358,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "9월 16일, 실제 특강 현장입니다.",
     "url": "https://www.instagram.com/reel/Dd-SkBQojWL/",
-    "views": 181,
-    "reach": 158,
+    "views": 182,
+    "reach": 159,
     "likes": 2,
     "comments": 0,
     "saved": 0,
@@ -356,8 +370,8 @@ const SOCIAL = {
     "type": "사진",
     "title": "🚨 부동산이지 사용후기 이벤트 진행 중!",
     "url": "https://www.instagram.com/p/Dd8rfsXgG6Y/",
-    "views": 79,
-    "reach": 40,
+    "views": 80,
+    "reach": 41,
     "likes": 3,
     "comments": 0,
     "saved": 0,
@@ -368,8 +382,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "9월 16일, 실제 특강 현장입니다.",
     "url": "https://www.instagram.com/reel/Dd5-0qDgDbT/",
-    "views": 210,
-    "reach": 181,
+    "views": 211,
+    "reach": 182,
     "likes": 2,
     "comments": 0,
     "saved": 0,
@@ -380,8 +394,8 @@ const SOCIAL = {
     "type": "여러 장",
     "title": "더 나은 중개를 위한 준비, 부동산이즈는 오늘도 진행 중 ✨",
     "url": "https://www.instagram.com/p/Dd3IDLQEUJi/",
-    "views": 124,
-    "reach": 49,
+    "views": 126,
+    "reach": 50,
     "likes": 6,
     "comments": 0,
     "saved": 0,
@@ -392,8 +406,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "중개사무소 창업 자금, 과연 얼마나 필요할까요? 🤔",
     "url": "https://www.instagram.com/reel/Dd1RM-Ihhia/",
-    "views": 235,
-    "reach": 192,
+    "views": 236,
+    "reach": 193,
     "likes": 1,
     "comments": 0,
     "saved": 0,
@@ -404,8 +418,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "9월 16일, 실제 특강 현장입니다.",
     "url": "https://www.instagram.com/reel/DdnzgtyRkdH/",
-    "views": 220,
-    "reach": 189,
+    "views": 221,
+    "reach": 190,
     "likes": 3,
     "comments": 0,
     "saved": 2,
@@ -416,8 +430,8 @@ const SOCIAL = {
     "type": "여러 장",
     "title": "9월 21일, 정기 모임에서 파트너사 대표님들을 만나 즐거운 시간을 보냈습니다 😊",
     "url": "https://www.instagram.com/p/DdnT1HzEZQg/",
-    "views": 201,
-    "reach": 78,
+    "views": 202,
+    "reach": 79,
     "likes": 6,
     "comments": 0,
     "saved": 0,
@@ -429,7 +443,7 @@ const SOCIAL = {
     "title": "아직도 네이버 부동산만 광고하고 계신가요? 🧐",
     "url": "https://www.instagram.com/reel/Ddl1FvMmExG/",
     "views": 255,
-    "reach": 225,
+    "reach": 226,
     "likes": 3,
     "comments": 0,
     "saved": 0,
@@ -616,7 +630,7 @@ const SOCIAL = {
     "shares": 0
    }
   ],
-  "updated": "2026-11-18 17:00"
+  "updated": "2026-11-19 17:00"
  },
  "tt": {
   "account": "neob_officail",
@@ -628,9 +642,26 @@ const SOCIAL = {
     6,
     75,
     57
+   ],
+   [
+    "2026-11-19",
+    6,
+    75,
+    60
    ]
   ],
   "videos": [
+   {
+    "id": "7709432560618687796",
+    "date": "2026-11-18 18:30",
+    "title": "11/18 18:30 영상",
+    "url": "https://www.tiktok.com/@neob_officail/video/7709432560618687796",
+    "views": 100,
+    "likes": 0,
+    "comments": 0,
+    "shares": 0,
+    "saves": null
+   },
    {
     "id": "7706471074585709830",
     "date": "2026-11-10 18:45",
@@ -1281,9 +1312,9 @@ const SOCIAL = {
     "saves": null
    }
   ],
-  "updated": "2026-11-18 17:01",
+  "updated": "2026-11-19 17:01",
   "source": "공식 통계",
-  "videosChecked": "2026-11-18 17:01"
+  "videosChecked": "2026-11-19 17:01"
  },
  "yt": {
   "daily": {
