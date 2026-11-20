@@ -16,6 +16,12 @@ const SOCIAL = {
     269,
     110,
     145
+   ],
+   [
+    "2026-11-20",
+    269,
+    111,
+    146
    ]
   ],
   "daily": [
@@ -41,7 +47,7 @@ const SOCIAL = {
     33,
     1,
     1,
-    0
+    null
    ],
    [
     "2026-10-22",
@@ -266,17 +272,37 @@ const SOCIAL = {
     1,
     1,
     0
+   ],
+   [
+    "2026-11-19",
+    35,
+    52,
+    3,
+    3,
+    0
    ]
   ],
   "posts": [
+   {
+    "date": "2026-11-19 18:22",
+    "type": "릴스",
+    "title": "AI 쓰는데 계약은 그대로라면?",
+    "url": "https://www.instagram.com/reel/Df6v2kggJnI/",
+    "views": 47,
+    "reach": 34,
+    "likes": 2,
+    "comments": 0,
+    "saved": 0,
+    "shares": 0
+   },
    {
     "date": "2026-11-17 19:10",
     "type": "릴스",
     "title": "AI가 어디까지 할 수 있을까요?",
     "url": "https://www.instagram.com/reel/Df1r2hLhVQH/",
-    "views": 158,
-    "reach": 131,
-    "likes": 2,
+    "views": 162,
+    "reach": 132,
+    "likes": 3,
     "comments": 0,
     "saved": 0,
     "shares": 0
@@ -286,8 +312,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "AI 활용, 어디까지 알고 계십니까?",
     "url": "https://www.instagram.com/reel/DfzCofZgmfb/",
-    "views": 160,
-    "reach": 127,
+    "views": 161,
+    "reach": 128,
     "likes": 2,
     "comments": 0,
     "saved": 0,
@@ -616,21 +642,9 @@ const SOCIAL = {
     "comments": 0,
     "saved": 0,
     "shares": 0
-   },
-   {
-    "date": "2026-08-25 22:30",
-    "type": "릴스",
-    "title": "공인중개사 이미지, 왜 자꾸 타격을 받을까요? 😢",
-    "url": "https://www.instagram.com/reel/Dcdv6iJEZIL/",
-    "views": 232,
-    "reach": 191,
-    "likes": 3,
-    "comments": 0,
-    "saved": 0,
-    "shares": 0
    }
   ],
-  "updated": "2026-11-19 17:00"
+  "updated": "2026-11-20 17:00"
  },
  "tt": {
   "account": "neob_officail",
@@ -648,15 +662,32 @@ const SOCIAL = {
     6,
     75,
     60
+   ],
+   [
+    "2026-11-20",
+    6,
+    76,
+    60
    ]
   ],
   "videos": [
+   {
+    "id": "7709433343632248116",
+    "date": "2026-11-19 18:30",
+    "title": "11/19 18:30 영상",
+    "url": "https://www.tiktok.com/@neob_officail/video/7709433343632248116",
+    "views": 114,
+    "likes": 1,
+    "comments": 0,
+    "shares": 0,
+    "saves": null
+   },
    {
     "id": "7709432560618687796",
     "date": "2026-11-18 18:30",
     "title": "11/18 18:30 영상",
     "url": "https://www.tiktok.com/@neob_officail/video/7709432560618687796",
-    "views": 100,
+    "views": 117,
     "likes": 0,
     "comments": 0,
     "shares": 0,
@@ -667,7 +698,7 @@ const SOCIAL = {
     "date": "2026-11-10 18:45",
     "title": "11/10 18:45 영상",
     "url": "https://www.tiktok.com/@neob_officail/video/7706471074585709830",
-    "views": 141,
+    "views": 142,
     "likes": 0,
     "comments": 0,
     "shares": 0,
@@ -678,7 +709,7 @@ const SOCIAL = {
     "date": "2026-11-03 18:30",
     "title": "11/03 18:30 영상",
     "url": "https://www.tiktok.com/@neob_officail/video/7703808954555452724",
-    "views": 126,
+    "views": 127,
     "likes": 0,
     "comments": 0,
     "shares": 0,
@@ -700,7 +731,7 @@ const SOCIAL = {
     "date": "2026-10-29 18:30",
     "title": "10/29 18:30 영상",
     "url": "https://www.tiktok.com/@neob_officail/video/7701530377516633345",
-    "views": 134,
+    "views": 135,
     "likes": 4,
     "comments": 0,
     "shares": 0,
@@ -722,7 +753,7 @@ const SOCIAL = {
     "date": "2026-10-25 18:30",
     "title": "10/25 18:30 영상",
     "url": "https://www.tiktok.com/@neob_officail/video/7699790374201560326",
-    "views": 130,
+    "views": 131,
     "likes": 1,
     "comments": 0,
     "shares": 0,
@@ -788,7 +819,7 @@ const SOCIAL = {
     "date": "2026-10-13 18:30",
     "title": "10/13 18:30 영상",
     "url": "https://www.tiktok.com/@neob_officail/video/7695655343535262982",
-    "views": 109,
+    "views": 110,
     "likes": 0,
     "comments": 0,
     "shares": 0,
@@ -876,7 +907,7 @@ const SOCIAL = {
     "date": "2026-10-01 18:51",
     "title": "10/01 18:51 영상",
     "url": "https://www.tiktok.com/@neob_officail/video/7691634909294644498",
-    "views": 124,
+    "views": 126,
     "likes": 5,
     "comments": 0,
     "shares": 0,
@@ -909,7 +940,7 @@ const SOCIAL = {
     "date": "2026-09-25 12:00",
     "title": "09/25 12:00 영상",
     "url": "https://www.tiktok.com/@neob_officail/video/7688558314048736513",
-    "views": 128,
+    "views": 129,
     "likes": 0,
     "comments": 0,
     "shares": 0,
@@ -920,7 +951,7 @@ const SOCIAL = {
     "date": "2026-09-24 12:00",
     "title": "09/24 12:00 영상",
     "url": "https://www.tiktok.com/@neob_officail/video/7688557998570097936",
-    "views": 132,
+    "views": 133,
     "likes": 1,
     "comments": 0,
     "shares": 0,
@@ -942,7 +973,7 @@ const SOCIAL = {
     "date": "2026-09-20 18:30",
     "title": "09/20 18:30 영상",
     "url": "https://www.tiktok.com/@neob_officail/video/7685303791255620865",
-    "views": 160,
+    "views": 161,
     "likes": 2,
     "comments": 0,
     "shares": 0,
@@ -986,7 +1017,7 @@ const SOCIAL = {
     "date": "2026-09-13 18:30",
     "title": "09/13 18:30 영상",
     "url": "https://www.tiktok.com/@neob_officail/video/7683440805561896208",
-    "views": 130,
+    "views": 131,
     "likes": 3,
     "comments": 0,
     "shares": 0,
@@ -1085,7 +1116,7 @@ const SOCIAL = {
     "date": "2026-08-30 18:30",
     "title": "AI가 써준 블로그글을 그대로 쓴다고요? ⭐대한민국 1등 부동산 중개실무 교육 네오비 ✅네오비 교육에 대해 …",
     "url": "https://www.tiktok.com/@neob_officail/video/7678912169240513799",
-    "views": 144,
+    "views": 145,
     "likes": 3,
     "comments": 0,
     "shares": 0,
@@ -1096,7 +1127,7 @@ const SOCIAL = {
     "date": "2026-08-29 18:30",
     "title": "네이버 부동산 매물 설명, 아직도 직접 쓰세요? ⭐대한민국 1등 부동산 중개실무 교육 네오비 ✅네오비 교육에…",
     "url": "https://www.tiktok.com/@neob_officail/video/7678911748111650055",
-    "views": 132,
+    "views": 133,
     "likes": 0,
     "comments": 0,
     "shares": 0,
@@ -1107,7 +1138,7 @@ const SOCIAL = {
     "date": "2026-08-27 18:30",
     "title": "AI가 추천하는 중개사가 되려면? ⭐대한민국 1등 부동산 중개실무 교육 네오비 ✅네오비 교육에 대해 궁금하다…",
     "url": "https://www.tiktok.com/@neob_officail/video/7677515561143733505",
-    "views": 212,
+    "views": 213,
     "likes": 8,
     "comments": 0,
     "shares": 0,
@@ -1151,7 +1182,7 @@ const SOCIAL = {
     "date": "2026-08-24 17:35",
     "title": "AI시대의 부동산 중개업, 이렇게 바뀔겁니다! ⭐대한민국 1등 부동산 중개실무 교육 네오비 ✅네오비 교육에 …",
     "url": "https://www.tiktok.com/@neob_officail/video/7677513820583120145",
-    "views": 162,
+    "views": 164,
     "likes": 1,
     "comments": 0,
     "shares": 0,
@@ -1173,7 +1204,7 @@ const SOCIAL = {
     "date": "2026-08-15 18:30",
     "title": "네이버 부동산 광고? 당연히 하는 거죠, 그럼 이건 어떨까요 ⭐ 대한민국 1등 부동산 중개실무 교육 네오비 …",
     "url": "https://www.tiktok.com/@neob_officail/video/7673399100917681424",
-    "views": 138,
+    "views": 140,
     "likes": 0,
     "comments": 0,
     "shares": 0,
@@ -1299,22 +1330,11 @@ const SOCIAL = {
     "comments": 0,
     "shares": 0,
     "saves": null
-   },
-   {
-    "id": "7668198863118798101",
-    "date": "2026-07-30 15:08",
-    "title": "⭐대한민국 1등 부동산 중개 실무 교육 네오비비즈아카데미 ✅네오비 교육이 더 궁금하다면? 네이버에서 네오비 …",
-    "url": "https://www.tiktok.com/@neob_officail/video/7668198863118798101",
-    "views": 0,
-    "likes": 0,
-    "comments": 0,
-    "shares": 0,
-    "saves": null
    }
   ],
-  "updated": "2026-11-19 17:01",
+  "updated": "2026-11-20 17:01",
   "source": "공식 통계",
-  "videosChecked": "2026-11-19 17:01"
+  "videosChecked": "2026-11-20 17:01"
  },
  "yt": {
   "daily": {
