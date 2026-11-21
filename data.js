@@ -123,7 +123,8 @@ const YT = {
             ["2026-11-19 17:00",473,null,null,null,null,null,7,null,null],
             ["2026-11-20 17:00",512,null,null,null,null,null,7,null,null],
             ["2026-11-21 18:00",554,null,null,null,null,null,7,null,null],
-            ["2026-11-21 18:42",551,null,null,null,null,null,7,null,null]],
+            ["2026-11-21 18:42",551,null,null,null,null,null,7,null,null],
+            ["2026-11-21 18:55",557,3.3,2300,null,21,null,7,null,0]],
       sources: [],
       note: "조회수·좋아요는 11/21 18:42 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
@@ -164,7 +165,9 @@ const YT = {
             ["2026-11-19 17:00",786,null,null,null,null,null,5,null,null],
             ["2026-11-20 17:00",803,null,null,null,null,null,5,null,null],
             ["2026-11-21 18:00",809,null,null,null,null,null,5,null,null],
-            ["2026-11-21 18:42",809,null,null,null,null,null,5,null,null]],
+            ["2026-11-21 18:42",809,null,null,null,null,null,5,null,null],
+            ["2026-11-21 18:55",811,4.4,null,null,20,null,5,null,1]],
+      stayed: 35.3,
       sources: [],
       note: "조회수·좋아요는 11/21 18:42 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     }
