@@ -326,8 +326,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "AI 활용, 어디까지 알고 계십니까?",
     "url": "https://www.instagram.com/reel/DfzCofZgmfb/",
-    "views": 164,
-    "reach": 128,
+    "views": 165,
+    "reach": 130,
     "likes": 3,
     "comments": 0,
     "saved": 0,
@@ -658,7 +658,7 @@ const SOCIAL = {
     "shares": 0
    }
   ],
-  "updated": "2026-11-21 18:00"
+  "updated": "2026-11-21 18:42"
  },
  "tt": {
   "account": "neob_officail",
@@ -1352,9 +1352,9 @@ const SOCIAL = {
     "saves": null
    }
   ],
-  "updated": "2026-11-21 18:01",
+  "updated": "2026-11-21 18:43",
   "source": "공식 통계",
-  "videosChecked": "2026-11-21 18:01"
+  "videosChecked": "2026-11-21 18:43"
  },
  "yt": {
   "daily": {

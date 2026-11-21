@@ -38,7 +38,7 @@ const BLOG = {
 // views: 현재까지 누적 조회수 / sources: [[유입 채널, 비중%], ...] (글·영상 상세 통계에서 옮겨 적기)
 // 비어 있으면 대시보드에 '예시'가 표시됩니다.
 const POSTS_REAL = {
-  // 조회수는 누적: 11/04~11/13 글은 2026-11-14 기준, 11/03 글은 2026-11-12 기준, 그 전 글은 2026-11-09 기준. 유입경로는 통계 화면 '일간 11/09' 기준(그날 조회만 반영)이라 srcNote에 표기
+  // 조회수는 누적: 11/16~11/20 글은 2026-11-21 기준, 11/04~11/13 글은 2026-11-14 기준, 11/03 글은 2026-11-12 기준, 그 전 글은 2026-11-09 기준. 유입경로는 통계 화면 '일간 11/09' 기준(그날 조회만 반영)이라 srcNote에 표기
   blog: [
     {"title": "10.15 부동산 대책 1년 평가, 서울 아파트값은 왜 88…", "date": "2026-10-19", "views": 84, "sources": [], "srcNote": "11/09 하루 기준"},
     {"title": "공인중개사 폐업 3년째 개업 추월, 거래 줄어든 시장…", "date": "2026-10-20", "views": 54, "sources": [], "srcNote": "11/09 하루 기준"},
@@ -61,7 +61,12 @@ const POSTS_REAL = {
     {"title": "공인중개사 연수교육 2026, 대상.신청.방법. 과태료 …", "date": "2026-11-10", "views": 49, "sources": [], "srcNote": ""},
     {"title": "중개보조원 vs 소속 공인중개사, 개업하면 누구와 일…", "date": "2026-11-11", "views": 36, "sources": [], "srcNote": ""},
     {"title": "중개대상물 확인설명서 작성법 2026, 자주 틀리는 항…", "date": "2026-11-12", "views": 30, "sources": [], "srcNote": ""},
-    {"title": "공인중개사 실무교육 2026, 37회 합격자 발표 전 알…", "date": "2026-11-13", "views": 52, "sources": [], "srcNote": ""}
+    {"title": "공인중개사 실무교육 2026, 37회 합격자 발표 전 알…", "date": "2026-11-13", "views": 52, "sources": [], "srcNote": ""},
+    {"title": "공인중개사 나이 제한 있을까? 50대. 60 대 37회 합…", "date": "2026-11-16", "views": 38, "sources": [], "srcNote": ""},
+    {"title": "AI 안경, 공인중개사 임장에 쓰면 뭐가 달라질까? 손…", "date": "2026-11-17", "views": 46, "sources": [], "srcNote": ""},
+    {"title": "등기부등본 열람료 11월 23일부터 인상, 공인중개사 …", "date": "2026-11-18", "views": 20, "sources": [], "srcNote": ""},
+    {"title": "공인중개사 자격증 5년 넘게 묵혔다면? 장롱 자격증 …", "date": "2026-11-19", "views": 94, "sources": [], "srcNote": ""},
+    {"title": "공인중개사 개업 시기, 언제가 좋을까? 봄 이사 철에 …", "date": "2026-11-20", "views": 22, "sources": [], "srcNote": ""}
   ]
 };
 
@@ -90,18 +95,26 @@ const YT = {
     {plan:"", brand:"부동산이즈", type:"쇼츠", status:"비공개 업로드", title:"🤖 \"나를 7명으로 복제한다면?\" 중개사 일 대신 하는 AI 7가지"},
     {plan:"2026-11-14", uploaded:"2026-11-14", brand:"부동산이지", type:"쇼츠", status:"업로드 완료", id:"i_tVqryxVKs",
      title:"⏱️ 등기부터 건축물대장까지, 1분이면 끝납니다"},
-    {plan:"", brand:"부동산이지", type:"롱폼", status:"제작 중", title:"부동산이지 핵심기능 5가지"},
+    {plan:"2026-11-21", uploaded:"2026-11-21", brand:"부동산이지", type:"롱폼", status:"업로드 완료", id:"4q-ipiHg36w",
+     title:"🤖 \"나를 7명으로 복제한다면?\" AI가 중개 업무 대신 하는 부동산이지 핵심기능 5가지"},
     {plan:"", brand:"부동산이즈", type:"롱폼", status:"기획 중", title:"부동산이즈 두 번째 영상 (대본 작업 중)"}
   ],
   // 영상별 결과 — 확인할 때마다 log에 한 줄 추가 (맨 아래 줄이 현재값, 줄이 쌓이면 추이 그래프가 그려짐)
   //   log : [확인 시각, 조회수, 시청시간(시간), 노출수, 노출 클릭률%, 평균 시청(초), 평균 시청률%, 좋아요, 댓글, 구독자 증가]
   //   sources : 게시 이후 유입 경로 [[경로, 조회수], ...]
   results: {
+    "4q-ipiHg36w": {
+      published: "2026-11-21 18:30",
+      log: [["2026-11-21 18:42",3,null,null,null,null,null,0,null,null]],
+      sources: [],
+      note: "조회수·좋아요는 11/21 18:42 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+    },
     "WoFaLcBQKS0": {
       published: "2026-11-21 07:30",
-      log: [["2026-11-21 18:00",628,null,null,null,null,null,0,null,null]],
+      log: [["2026-11-21 18:00",628,null,null,null,null,null,0,null,null],
+            ["2026-11-21 18:42",646,null,null,null,null,null,0,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/21 18:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/21 18:42 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
     "JkT9AnFXLFA": {
       published: "2026-11-17 18:30",
@@ -109,9 +122,10 @@ const YT = {
             ["2026-11-18 17:00",373,null,null,null,null,null,6,null,null],
             ["2026-11-19 17:00",473,null,null,null,null,null,7,null,null],
             ["2026-11-20 17:00",512,null,null,null,null,null,7,null,null],
-            ["2026-11-21 18:00",554,null,null,null,null,null,7,null,null]],
+            ["2026-11-21 18:00",554,null,null,null,null,null,7,null,null],
+            ["2026-11-21 18:42",551,null,null,null,null,null,7,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/21 18:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/21 18:42 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
     "nKEjdzGH_ek": {
       published: "2026-11-11 18:30",
@@ -122,9 +136,10 @@ const YT = {
             ["2026-11-18 17:00",700,null,null,null,null,null,7,null,null],
             ["2026-11-19 17:00",791,null,null,null,null,null,9,null,null],
             ["2026-11-20 17:00",861,null,null,null,null,null,9,null,null],
-            ["2026-11-21 18:00",887,null,null,null,null,null,9,null,null]],
+            ["2026-11-21 18:00",887,null,null,null,null,null,9,null,null],
+            ["2026-11-21 18:42",887,null,null,null,null,null,9,null,null]],
       sources: [["탐색 기능",317],["알림",26],["기타",58]],
-      note: "조회수·좋아요는 11/21 18:00 공개 페이지 기준, 시청시간·노출·클릭률·평균 시청·댓글·구독은 11/12 15:11 스튜디오 확인값"
+      note: "조회수·좋아요는 11/21 18:42 공개 페이지 기준, 시청시간·노출·클릭률·평균 시청·댓글·구독은 11/12 15:11 스튜디오 확인값"
     },
     // 스튜디오(크롬 확장) 연결이 안 될 때는 공개 페이지 숫자(조회수·좋아요)만 적고 나머지는 null → 화면에 "-"
     "IBrG8XjfaZA": {
@@ -135,9 +150,10 @@ const YT = {
             ["2026-11-18 17:00",1060,null,null,null,null,null,8,null,null],
             ["2026-11-19 17:00",1091,null,null,null,null,null,8,null,null],
             ["2026-11-20 17:00",1101,null,null,null,null,null,9,null,null],
-            ["2026-11-21 18:00",1105,null,null,null,null,null,9,null,null]],
+            ["2026-11-21 18:00",1105,null,null,null,null,null,9,null,null],
+            ["2026-11-21 18:42",1105,null,null,null,null,null,9,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/21 18:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/21 18:42 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
     "i_tVqryxVKs": {
       published: "2026-11-14 18:30",
@@ -147,9 +163,10 @@ const YT = {
             ["2026-11-18 17:00",752,null,null,null,null,null,4,null,null],
             ["2026-11-19 17:00",786,null,null,null,null,null,5,null,null],
             ["2026-11-20 17:00",803,null,null,null,null,null,5,null,null],
-            ["2026-11-21 18:00",809,null,null,null,null,null,5,null,null]],
+            ["2026-11-21 18:00",809,null,null,null,null,null,5,null,null],
+            ["2026-11-21 18:42",809,null,null,null,null,null,5,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/21 18:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/21 18:42 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     }
   },
   // 네오비TV 채널 비교 — 최근 3개월 동안 채널에 올라온 영상(우리 영상 제외). 유튜브 탭 '네오비TV 최근 영상과 비교'에 표시
