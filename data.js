@@ -79,7 +79,8 @@ const YT = {
     {plan:"2026-11-11", uploaded:"2026-11-11", brand:"부동산이즈", type:"롱폼", status:"업로드 완료", id:"nKEjdzGH_ek",
      title:"공인중개사 합격 후 뭘 해야 할지 모르겠다면? '이 영상' 하나로 정리해 드립니다."},
     // 11/14: 스튜디오에 비공개로 올려 둔 영상은 '비공개 업로드', 공개일이 정해지면 plan 채우기. 제목은 유튜브에 올린 제목 그대로
-    {plan:"", brand:"부동산이즈", type:"쇼츠", status:"비공개 업로드", title:"❓개업할까 취업할까? 질문 2개면 5초 만에 답 나옵니다❗"},
+    {plan:"2026-11-21", uploaded:"2026-11-21", brand:"부동산이즈", type:"쇼츠", status:"업로드 완료", id:"WoFaLcBQKS0",
+     title:"❓개업할까 취업할까? 질문 2개면 5초 만에 답 나옵니다❗"},
     {plan:"", brand:"부동산이즈", type:"쇼츠", status:"비공개 업로드", title:"\"개업하면 돈 번다?\" 현실은 정반대입니다"},
     {plan:"2026-11-17", uploaded:"2026-11-17", brand:"부동산이지", type:"롱폼", status:"업로드 완료", id:"JkT9AnFXLFA",
      title:"매출 안 오르는 중개사무소, 이유는 딱 하나입니다 | 노트·수첩·엑셀 한 화면으로 끝내는 법"},
@@ -96,14 +97,21 @@ const YT = {
   //   log : [확인 시각, 조회수, 시청시간(시간), 노출수, 노출 클릭률%, 평균 시청(초), 평균 시청률%, 좋아요, 댓글, 구독자 증가]
   //   sources : 게시 이후 유입 경로 [[경로, 조회수], ...]
   results: {
+    "WoFaLcBQKS0": {
+      published: "2026-11-21 07:30",
+      log: [["2026-11-21 18:00",628,null,null,null,null,null,0,null,null]],
+      sources: [],
+      note: "조회수·좋아요는 11/21 18:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+    },
     "JkT9AnFXLFA": {
       published: "2026-11-17 18:30",
       log: [["2026-11-18 12:36",332,null,null,null,null,null,5,null,null],
             ["2026-11-18 17:00",373,null,null,null,null,null,6,null,null],
             ["2026-11-19 17:00",473,null,null,null,null,null,7,null,null],
-            ["2026-11-20 17:00",512,null,null,null,null,null,7,null,null]],
+            ["2026-11-20 17:00",512,null,null,null,null,null,7,null,null],
+            ["2026-11-21 18:00",554,null,null,null,null,null,7,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/20 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/21 18:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
     "nKEjdzGH_ek": {
       published: "2026-11-11 18:30",
@@ -113,9 +121,10 @@ const YT = {
             ["2026-11-18 12:36",693,null,null,null,null,null,7,null,null],
             ["2026-11-18 17:00",700,null,null,null,null,null,7,null,null],
             ["2026-11-19 17:00",791,null,null,null,null,null,9,null,null],
-            ["2026-11-20 17:00",861,null,null,null,null,null,9,null,null]],
+            ["2026-11-20 17:00",861,null,null,null,null,null,9,null,null],
+            ["2026-11-21 18:00",887,null,null,null,null,null,9,null,null]],
       sources: [["탐색 기능",317],["알림",26],["기타",58]],
-      note: "조회수·좋아요는 11/20 17:00 공개 페이지 기준, 시청시간·노출·클릭률·평균 시청·댓글·구독은 11/12 15:11 스튜디오 확인값"
+      note: "조회수·좋아요는 11/21 18:00 공개 페이지 기준, 시청시간·노출·클릭률·평균 시청·댓글·구독은 11/12 15:11 스튜디오 확인값"
     },
     // 스튜디오(크롬 확장) 연결이 안 될 때는 공개 페이지 숫자(조회수·좋아요)만 적고 나머지는 null → 화면에 "-"
     "IBrG8XjfaZA": {
@@ -125,9 +134,10 @@ const YT = {
             ["2026-11-18 12:36",1060,null,null,null,null,null,8,null,null],
             ["2026-11-18 17:00",1060,null,null,null,null,null,8,null,null],
             ["2026-11-19 17:00",1091,null,null,null,null,null,8,null,null],
-            ["2026-11-20 17:00",1101,null,null,null,null,null,9,null,null]],
+            ["2026-11-20 17:00",1101,null,null,null,null,null,9,null,null],
+            ["2026-11-21 18:00",1105,null,null,null,null,null,9,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/20 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/21 18:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
     "i_tVqryxVKs": {
       published: "2026-11-14 18:30",
@@ -136,9 +146,10 @@ const YT = {
             ["2026-11-18 12:36",721,null,null,null,null,null,4,null,null],
             ["2026-11-18 17:00",752,null,null,null,null,null,4,null,null],
             ["2026-11-19 17:00",786,null,null,null,null,null,5,null,null],
-            ["2026-11-20 17:00",803,null,null,null,null,null,5,null,null]],
+            ["2026-11-20 17:00",803,null,null,null,null,null,5,null,null],
+            ["2026-11-21 18:00",809,null,null,null,null,null,5,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/20 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/21 18:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     }
   },
   // 네오비TV 채널 비교 — 최근 3개월 동안 채널에 올라온 영상(우리 영상 제외). 유튜브 탭 '네오비TV 최근 영상과 비교'에 표시

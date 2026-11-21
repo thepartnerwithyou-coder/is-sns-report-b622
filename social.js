@@ -22,6 +22,12 @@ const SOCIAL = {
     269,
     111,
     146
+   ],
+   [
+    "2026-11-21",
+    269,
+    112,
+    146
    ]
   ],
   "daily": [
@@ -55,7 +61,7 @@ const SOCIAL = {
     45,
     1,
     1,
-    0
+    null
    ],
    [
     "2026-10-23",
@@ -271,7 +277,7 @@ const SOCIAL = {
     29,
     1,
     1,
-    0
+    1
    ],
    [
     "2026-11-19",
@@ -279,6 +285,14 @@ const SOCIAL = {
     52,
     3,
     3,
+    0
+   ],
+   [
+    "2026-11-20",
+    42,
+    76,
+    5,
+    5,
     0
    ]
   ],
@@ -288,8 +302,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "AI 쓰는데 계약은 그대로라면?",
     "url": "https://www.instagram.com/reel/Df6v2kggJnI/",
-    "views": 47,
-    "reach": 34,
+    "views": 67,
+    "reach": 44,
     "likes": 2,
     "comments": 0,
     "saved": 0,
@@ -300,8 +314,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "AI가 어디까지 할 수 있을까요?",
     "url": "https://www.instagram.com/reel/Df1r2hLhVQH/",
-    "views": 162,
-    "reach": 132,
+    "views": 170,
+    "reach": 135,
     "likes": 3,
     "comments": 0,
     "saved": 0,
@@ -312,9 +326,9 @@ const SOCIAL = {
     "type": "릴스",
     "title": "AI 활용, 어디까지 알고 계십니까?",
     "url": "https://www.instagram.com/reel/DfzCofZgmfb/",
-    "views": 161,
+    "views": 164,
     "reach": 128,
-    "likes": 2,
+    "likes": 3,
     "comments": 0,
     "saved": 0,
     "shares": 0
@@ -644,7 +658,7 @@ const SOCIAL = {
     "shares": 0
    }
   ],
-  "updated": "2026-11-20 17:00"
+  "updated": "2026-11-21 18:00"
  },
  "tt": {
   "account": "neob_officail",
@@ -668,6 +682,12 @@ const SOCIAL = {
     6,
     76,
     60
+   ],
+   [
+    "2026-11-21",
+    6,
+    76,
+    60
    ]
   ],
   "videos": [
@@ -676,7 +696,7 @@ const SOCIAL = {
     "date": "2026-11-19 18:30",
     "title": "11/19 18:30 영상",
     "url": "https://www.tiktok.com/@neob_officail/video/7709433343632248116",
-    "views": 114,
+    "views": 118,
     "likes": 1,
     "comments": 0,
     "shares": 0,
@@ -1332,9 +1352,9 @@ const SOCIAL = {
     "saves": null
    }
   ],
-  "updated": "2026-11-20 17:01",
+  "updated": "2026-11-21 18:01",
   "source": "공식 통계",
-  "videosChecked": "2026-11-20 17:01"
+  "videosChecked": "2026-11-21 18:01"
  },
  "yt": {
   "daily": {
