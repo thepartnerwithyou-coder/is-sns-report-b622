@@ -107,33 +107,37 @@ const YT = {
   results: {
     "HDVjHeQIC9Y": {
       published: "2026-11-24 07:30",
-      log: [["2026-11-24 17:00",318,null,null,null,null,null,2,null,null]],
+      log: [["2026-11-24 17:00",318,null,null,null,null,null,2,null,null],
+            ["2026-11-25 17:00",717,null,null,null,null,null,3,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/24 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/25 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
     "naFcedRcYK8": {
       published: "2026-11-22 07:30",
       log: [["2026-11-23 17:00",1249,null,null,null,null,null,3,null,null],
-            ["2026-11-24 17:00",1309,null,null,null,null,null,3,null,null]],
+            ["2026-11-24 17:00",1309,null,null,null,null,null,3,null,null],
+            ["2026-11-25 17:00",1330,null,null,null,null,null,3,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/24 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/25 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
     "4q-ipiHg36w": {
       published: "2026-11-21 18:30",
       log: [["2026-11-21 18:42",3,null,null,null,null,null,0,null,null],
             ["2026-11-23 17:00",1081,null,null,null,null,null,8,null,null],
-            ["2026-11-24 17:00",1161,null,null,null,null,null,8,null,null]],
+            ["2026-11-24 17:00",1161,null,null,null,null,null,8,null,null],
+            ["2026-11-25 17:00",1218,null,null,null,null,null,8,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/24 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/25 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
     "WoFaLcBQKS0": {
       published: "2026-11-21 07:30",
       log: [["2026-11-21 18:00",628,null,null,null,null,null,0,null,null],
             ["2026-11-21 18:42",646,null,null,null,null,null,0,null,null],
             ["2026-11-23 17:00",875,null,null,null,null,null,1,null,null],
-            ["2026-11-24 17:00",1022,null,null,null,null,null,1,null,null]],
+            ["2026-11-24 17:00",1022,null,null,null,null,null,1,null,null],
+            ["2026-11-25 17:00",1092,null,null,null,null,null,1,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/24 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/25 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
     "JkT9AnFXLFA": {
       published: "2026-11-17 18:30",
@@ -145,9 +149,10 @@ const YT = {
             ["2026-11-21 18:42",551,null,null,null,null,null,7,null,null],
             ["2026-11-21 18:55",557,3.3,2300,null,21,null,7,null,0],
             ["2026-11-23 17:00",585,null,null,null,null,null,8,null,null],
-            ["2026-11-24 17:00",593,null,null,null,null,null,8,null,null]],
+            ["2026-11-24 17:00",593,null,null,null,null,null,8,null,null],
+            ["2026-11-25 17:00",604,null,null,null,null,null,8,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/24 17:00 공개 페이지 기준, 시청시간·노출·클릭률·평균 시청·댓글·구독은 11/21 18:55 스튜디오 확인값"
+      note: "조회수·좋아요는 11/25 17:00 공개 페이지 기준, 시청시간·노출·클릭률·평균 시청·댓글·구독은 11/21 18:55 스튜디오 확인값"
     },
     "nKEjdzGH_ek": {
       published: "2026-11-11 18:30",
@@ -161,9 +166,10 @@ const YT = {
             ["2026-11-21 18:00",887,null,null,null,null,null,9,null,null],
             ["2026-11-21 18:42",887,null,null,null,null,null,9,null,null],
             ["2026-11-23 17:00",906,null,null,null,null,null,9,null,null],
-            ["2026-11-24 17:00",907,null,null,null,null,null,9,null,null]],
+            ["2026-11-24 17:00",907,null,null,null,null,null,9,null,null],
+            ["2026-11-25 17:00",915,null,null,null,null,null,9,null,null]],
       sources: [["탐색 기능",317],["알림",26],["기타",58]],
-      note: "조회수·좋아요는 11/24 17:00 공개 페이지 기준, 시청시간·노출·클릭률·평균 시청·댓글·구독은 11/12 15:11 스튜디오 확인값"
+      note: "조회수·좋아요는 11/25 17:00 공개 페이지 기준, 시청시간·노출·클릭률·평균 시청·댓글·구독은 11/12 15:11 스튜디오 확인값"
     },
     // 스튜디오(크롬 확장) 연결이 안 될 때는 공개 페이지 숫자(조회수·좋아요)만 적고 나머지는 null → 화면에 "-"
     "IBrG8XjfaZA": {
@@ -177,9 +183,10 @@ const YT = {
             ["2026-11-21 18:00",1105,null,null,null,null,null,9,null,null],
             ["2026-11-21 18:42",1105,null,null,null,null,null,9,null,null],
             ["2026-11-23 17:00",1110,null,null,null,null,null,9,null,null],
-            ["2026-11-24 17:00",1112,null,null,null,null,null,9,null,null]],
+            ["2026-11-24 17:00",1112,null,null,null,null,null,9,null,null],
+            ["2026-11-25 17:00",1118,null,null,null,null,null,9,null,null]],
       sources: [],
-      note: "조회수·좋아요는 11/24 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
+      note: "조회수·좋아요는 11/25 17:00 공개 페이지 기준 (스튜디오 상세 수치는 확인 후 반영)"
     },
     "i_tVqryxVKs": {
       published: "2026-11-14 18:30",
@@ -193,10 +200,11 @@ const YT = {
             ["2026-11-21 18:42",809,null,null,null,null,null,5,null,null],
             ["2026-11-21 18:55",811,4.4,null,null,20,null,5,null,1],
             ["2026-11-23 17:00",818,null,null,null,null,null,5,null,null],
-            ["2026-11-24 17:00",818,null,null,null,null,null,5,null,null]],
+            ["2026-11-24 17:00",818,null,null,null,null,null,5,null,null],
+            ["2026-11-25 17:00",825,null,null,null,null,null,5,null,null]],
       stayed: 35.3,
       sources: [],
-      note: "조회수·좋아요는 11/24 17:00 공개 페이지 기준, 시청시간·노출·클릭률·평균 시청·댓글·구독은 11/21 18:55 스튜디오 확인값"
+      note: "조회수·좋아요는 11/25 17:00 공개 페이지 기준, 시청시간·노출·클릭률·평균 시청·댓글·구독은 11/21 18:55 스튜디오 확인값"
     }
   },
   // 네오비TV 채널 비교 — 최근 3개월 동안 채널에 올라온 영상(우리 영상 제외). 유튜브 탭 '네오비TV 최근 영상과 비교'에 표시
