@@ -46,6 +46,12 @@ const SOCIAL = {
     317,
     140,
     148
+   ],
+   [
+    "2026-11-26",
+    330,
+    151,
+    150
    ]
   ],
   "daily": [
@@ -119,7 +125,7 @@ const SOCIAL = {
     2,
     0,
     0,
-    1
+    null
    ],
    [
     "2026-10-28",
@@ -335,25 +341,57 @@ const SOCIAL = {
     28964,
     176,
     253,
-    0
+    22
    ],
    [
     "2026-11-24",
-    5851,
-    6819,
-    62,
-    101,
+    5878,
+    6850,
+    63,
+    103,
+    0
+   ],
+   [
+    "2026-11-25",
+    3240,
+    3935,
+    46,
+    76,
     0
    ]
   ],
   "posts": [
    {
+    "date": "2026-11-26 12:41",
+    "type": "릴스",
+    "title": "종부세 모르면 수백만 원 손해 봅니다 🚨",
+    "url": "https://www.instagram.com/reel/DgMKcWsg3qt/",
+    "views": 461,
+    "reach": 403,
+    "likes": 2,
+    "comments": 2,
+    "saved": 0,
+    "shares": 0
+   },
+   {
+    "date": "2026-11-25 17:36",
+    "type": "릴스",
+    "title": "💸10억 아파트로 갈아타면 내 돈 6억. 한 달 이자는 얼마일까?💸",
+    "url": "https://www.instagram.com/reel/DgKHXcxAlFE/",
+    "views": 1852,
+    "reach": 1556,
+    "likes": 7,
+    "comments": 0,
+    "saved": 7,
+    "shares": 7
+   },
+   {
     "date": "2026-11-24 17:55",
     "type": "릴스",
     "title": "💰10억 아파트를 생애최초로 사면 내 돈 4억. 한 달 이자는 얼마일까?💰",
     "url": "https://www.instagram.com/reel/DgHkxXngnQg/",
-    "views": 1528,
-    "reach": 1242,
+    "views": 1581,
+    "reach": 1288,
     "likes": 6,
     "comments": 0,
     "saved": 3,
@@ -364,21 +402,21 @@ const SOCIAL = {
     "type": "릴스",
     "title": "🚨 내년 1월부터 대출, 지금처럼 안 나옵니다",
     "url": "https://www.instagram.com/reel/DgE-7BJgYU4/",
-    "views": 34333,
-    "reach": 30962,
-    "likes": 62,
-    "comments": 50,
-    "saved": 47,
-    "shares": 79
+    "views": 35831,
+    "reach": 32361,
+    "likes": 69,
+    "comments": 52,
+    "saved": 52,
+    "shares": 90
    },
    {
     "date": "2026-11-19 18:22",
     "type": "릴스",
     "title": "AI 쓰는데 계약은 그대로라면?",
     "url": "https://www.instagram.com/reel/Df6v2kggJnI/",
-    "views": 85,
-    "reach": 60,
-    "likes": 2,
+    "views": 98,
+    "reach": 69,
+    "likes": 3,
     "comments": 0,
     "saved": 0,
     "shares": 0
@@ -388,8 +426,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "AI가 어디까지 할 수 있을까요?",
     "url": "https://www.instagram.com/reel/Df1r2hLhVQH/",
-    "views": 184,
-    "reach": 146,
+    "views": 190,
+    "reach": 152,
     "likes": 4,
     "comments": 0,
     "saved": 1,
@@ -400,8 +438,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "AI 활용, 어디까지 알고 계십니까?",
     "url": "https://www.instagram.com/reel/DfzCofZgmfb/",
-    "views": 173,
-    "reach": 139,
+    "views": 181,
+    "reach": 146,
     "likes": 3,
     "comments": 0,
     "saved": 0,
@@ -412,8 +450,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "계약 끝났다고 고객 관리도 끝내셨나요?\" 🤦‍♂️",
     "url": "https://www.instagram.com/reel/Det5ClTEYza/",
-    "views": 412,
-    "reach": 352,
+    "views": 417,
+    "reach": 357,
     "likes": 6,
     "comments": 2,
     "saved": 0,
@@ -424,7 +462,7 @@ const SOCIAL = {
     "type": "여러 장",
     "title": "오늘은 협회 강의 중입니다! 😊",
     "url": "https://www.instagram.com/p/Dei_GYUEhtO/",
-    "views": 170,
+    "views": 171,
     "reach": 80,
     "likes": 6,
     "comments": 0,
@@ -436,8 +474,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "실무를 배우고 싶은데, 받아주는 곳이 없다면? 🤔",
     "url": "https://www.instagram.com/reel/Dearm9mgJrW/",
-    "views": 221,
-    "reach": 182,
+    "views": 224,
+    "reach": 185,
     "likes": 7,
     "comments": 0,
     "saved": 0,
@@ -448,8 +486,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "9월 16일, 실제 특강 현장입니다",
     "url": "https://www.instagram.com/reel/DeOBbLkxjE0/",
-    "views": 179,
-    "reach": 147,
+    "views": 181,
+    "reach": 149,
     "likes": 2,
     "comments": 0,
     "saved": 0,
@@ -460,8 +498,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "9월 16일, 실제 특강 현장입니다!",
     "url": "https://www.instagram.com/reel/DeLTmczAvXA/",
-    "views": 193,
-    "reach": 167,
+    "views": 195,
+    "reach": 169,
     "likes": 1,
     "comments": 0,
     "saved": 0,
@@ -472,8 +510,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "9월 16일, 실제 특강 현장입니다.",
     "url": "https://www.instagram.com/reel/Dd-SkBQojWL/",
-    "views": 184,
-    "reach": 162,
+    "views": 186,
+    "reach": 164,
     "likes": 2,
     "comments": 0,
     "saved": 0,
@@ -496,8 +534,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "9월 16일, 실제 특강 현장입니다.",
     "url": "https://www.instagram.com/reel/Dd5-0qDgDbT/",
-    "views": 213,
-    "reach": 184,
+    "views": 214,
+    "reach": 185,
     "likes": 2,
     "comments": 0,
     "saved": 0,
@@ -682,33 +720,9 @@ const SOCIAL = {
     "comments": 0,
     "saved": 0,
     "shares": 0
-   },
-   {
-    "date": "2026-09-02 14:16",
-    "type": "사진",
-    "title": "🌸 네오비의 꽃, 수료식",
-    "url": "https://www.instagram.com/p/DcxdtCFR9ui/",
-    "views": 155,
-    "reach": 85,
-    "likes": 10,
-    "comments": 0,
-    "saved": 0,
-    "shares": 0
-   },
-   {
-    "date": "2026-09-02 11:05",
-    "type": "릴스",
-    "title": "이거 불법이라 안 된대~\" 하고 쉽게 포기하고 계신가요?",
-    "url": "https://www.instagram.com/reel/DcxHwb9gMJ1/",
-    "views": 250,
-    "reach": 202,
-    "likes": 4,
-    "comments": 0,
-    "saved": 1,
-    "shares": 0
    }
   ],
-  "updated": "2026-11-25 17:00"
+  "updated": "2026-11-26 17:00"
  },
  "tt": {
   "account": "neob_officail",
@@ -756,16 +770,44 @@ const SOCIAL = {
     9,
     85,
     64
+   ],
+   [
+    "2026-11-26",
+    9,
+    90,
+    66
    ]
   ],
   "videos": [
+   {
+    "id": "7712319379353980181",
+    "date": "2026-11-26 12:38",
+    "title": "종부세 모르면 수백만 원 손해 봅니다 🚨 12월 1일~15일, 종부세 납부 기간입니다. 내기 전에 이 세 가…",
+    "url": "https://www.tiktok.com/@neob_official/video/7712319379353980181",
+    "views": 69,
+    "likes": 0,
+    "comments": 0,
+    "shares": 0,
+    "saves": null
+   },
+   {
+    "id": "7712016270861929749",
+    "date": "2026-11-25 17:02",
+    "title": "🚨 내년 1월 1일부터 대출 막힙니다 연봉 오른 만큼 한도도 늘 거라고 생각하셨다면 꼭 보세요. ✔️ 소득이…",
+    "url": "https://www.tiktok.com/@neob_official/video/7712016270861929749",
+    "views": 249,
+    "likes": 0,
+    "comments": 0,
+    "shares": 0,
+    "saves": null
+   },
    {
     "id": "7711661417665023252",
     "date": "2026-11-24 18:04",
     "title": "💸10억 아파트로 갈아타면 내 돈 6억. 한 달 이자는 얼마일까?💸 집값 5억부터 15억까지, 갈아타기로 살…",
     "url": "https://www.tiktok.com/@neob_official/video/7711661417665023252",
-    "views": 910,
-    "likes": 3,
+    "views": 1127,
+    "likes": 4,
     "comments": 0,
     "shares": 0,
     "saves": null
@@ -775,10 +817,10 @@ const SOCIAL = {
     "date": "2026-11-24 17:57",
     "title": "💰10억 아파트를 생애최초로 사면 내 돈 4억. 한 달 이자는 얼마일까?💰 집값 5억부터 15억까지, 생애최…",
     "url": "https://www.tiktok.com/@neob_official/video/7711659602437328148",
-    "views": 1690,
-    "likes": 6,
+    "views": 2402,
+    "likes": 10,
     "comments": 0,
-    "shares": 2,
+    "shares": 3,
     "saves": null
    },
    {
@@ -808,7 +850,7 @@ const SOCIAL = {
     "date": "2026-11-18 18:30",
     "title": "11/18 18:30 영상",
     "url": "https://www.tiktok.com/@neob_official/video/7709432560618687796",
-    "views": 119,
+    "views": 120,
     "likes": 0,
     "comments": 0,
     "shares": 0,
@@ -885,10 +927,10 @@ const SOCIAL = {
     "date": "2026-10-24 18:30",
     "title": "10/24 18:30 영상",
     "url": "https://www.tiktok.com/@neob_official/video/7699059690109537588",
-    "views": 136,
+    "views": 138,
     "likes": 0,
     "comments": 0,
-    "shares": 0,
+    "shares": 1,
     "saves": null
    },
    {
@@ -1116,7 +1158,7 @@ const SOCIAL = {
     "date": "2026-09-17 18:30",
     "title": "09/17 18:30 영상",
     "url": "https://www.tiktok.com/@neob_official/video/7685303362136345873",
-    "views": 122,
+    "views": 123,
     "likes": 4,
     "comments": 0,
     "shares": 0,
@@ -1127,7 +1169,7 @@ const SOCIAL = {
     "date": "2026-09-15 18:30",
     "title": "⭐대한민국 1등 부동산 중개실무 교육 네오비 ✅네오비 교육에 대해 궁금하다면? [네오비] 검색!  #부동산중…",
     "url": "https://www.tiktok.com/@neob_official/video/7683750508049354000",
-    "views": 144,
+    "views": 145,
     "likes": 3,
     "comments": 0,
     "shares": 0,
@@ -1396,33 +1438,11 @@ const SOCIAL = {
     "comments": 0,
     "shares": 0,
     "saves": null
-   },
-   {
-    "id": "7668250254105595157",
-    "date": "2026-08-01 18:30",
-    "title": "부동산 중개보수, 이대로 괜찮을까요? ⭐ 대한민국 1등 부동산 중개실무 교육 네오비 ✅ 네오비 교육에 대해 …",
-    "url": "https://www.tiktok.com/@neob_official/video/7668250254105595157",
-    "views": 0,
-    "likes": 0,
-    "comments": 0,
-    "shares": 0,
-    "saves": null
-   },
-   {
-    "id": "7668250077139422485",
-    "date": "2026-07-30 18:26",
-    "title": "부동산 망하기 전 전조증상이 뭔지 아세요? ⭐ 대한민국 1등 부동산 중개실무 교육 네오비 ✅ 네오비 교육에 …",
-    "url": "https://www.tiktok.com/@neob_official/video/7668250077139422485",
-    "views": 0,
-    "likes": 0,
-    "comments": 0,
-    "shares": 0,
-    "saves": null
    }
   ],
-  "updated": "2026-11-25 17:01",
+  "updated": "2026-11-26 17:00",
   "source": "공식 통계",
-  "videosChecked": "2026-11-25 17:01"
+  "videosChecked": "2026-11-26 17:00"
  },
  "yt": {
   "daily": {
