@@ -52,6 +52,12 @@ const SOCIAL = {
     330,
     151,
     150
+   ],
+   [
+    "2026-11-27",
+    335,
+    152,
+    150
    ]
   ],
   "daily": [
@@ -133,7 +139,7 @@ const SOCIAL = {
     3,
     0,
     0,
-    1
+    null
    ],
    [
     "2026-10-29",
@@ -349,14 +355,22 @@ const SOCIAL = {
     6850,
     63,
     103,
-    0
+    14
    ],
    [
     "2026-11-25",
-    3240,
-    3935,
-    46,
-    76,
+    3269,
+    3956,
+    47,
+    78,
+    0
+   ],
+   [
+    "2026-11-26",
+    1349,
+    1580,
+    9,
+    14,
     0
    ]
   ],
@@ -364,11 +378,11 @@ const SOCIAL = {
    {
     "date": "2026-11-26 12:41",
     "type": "릴스",
-    "title": "종부세 모르면 수백만 원 손해 봅니다 🚨",
+    "title": "📩 현재 DM 자동 발송에 오류가 있어요! 댓글 남겨주시면 확인 후 직접 자료 보내드릴게요 😊",
     "url": "https://www.instagram.com/reel/DgMKcWsg3qt/",
-    "views": 461,
-    "reach": 403,
-    "likes": 2,
+    "views": 563,
+    "reach": 490,
+    "likes": 4,
     "comments": 2,
     "saved": 0,
     "shares": 0
@@ -378,9 +392,9 @@ const SOCIAL = {
     "type": "릴스",
     "title": "💸10억 아파트로 갈아타면 내 돈 6억. 한 달 이자는 얼마일까?💸",
     "url": "https://www.instagram.com/reel/DgKHXcxAlFE/",
-    "views": 1852,
-    "reach": 1556,
-    "likes": 7,
+    "views": 1920,
+    "reach": 1617,
+    "likes": 8,
     "comments": 0,
     "saved": 7,
     "shares": 7
@@ -390,8 +404,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "💰10억 아파트를 생애최초로 사면 내 돈 4억. 한 달 이자는 얼마일까?💰",
     "url": "https://www.instagram.com/reel/DgHkxXngnQg/",
-    "views": 1581,
-    "reach": 1288,
+    "views": 1585,
+    "reach": 1290,
     "likes": 6,
     "comments": 0,
     "saved": 3,
@@ -402,12 +416,12 @@ const SOCIAL = {
     "type": "릴스",
     "title": "🚨 내년 1월부터 대출, 지금처럼 안 나옵니다",
     "url": "https://www.instagram.com/reel/DgE-7BJgYU4/",
-    "views": 35831,
-    "reach": 32361,
+    "views": 37247,
+    "reach": 33617,
     "likes": 69,
-    "comments": 52,
-    "saved": 52,
-    "shares": 90
+    "comments": 54,
+    "saved": 53,
+    "shares": 94
    },
    {
     "date": "2026-11-19 18:22",
@@ -426,8 +440,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "AI가 어디까지 할 수 있을까요?",
     "url": "https://www.instagram.com/reel/Df1r2hLhVQH/",
-    "views": 190,
-    "reach": 152,
+    "views": 192,
+    "reach": 153,
     "likes": 4,
     "comments": 0,
     "saved": 1,
@@ -722,7 +736,7 @@ const SOCIAL = {
     "shares": 0
    }
   ],
-  "updated": "2026-11-26 17:00"
+  "updated": "2026-11-27 17:00"
  },
  "tt": {
   "account": "neob_officail",
@@ -776,6 +790,12 @@ const SOCIAL = {
     9,
     90,
     66
+   ],
+   [
+    "2026-11-27",
+    10,
+    91,
+    66
    ]
   ],
   "videos": [
@@ -784,7 +804,7 @@ const SOCIAL = {
     "date": "2026-11-26 12:38",
     "title": "종부세 모르면 수백만 원 손해 봅니다 🚨 12월 1일~15일, 종부세 납부 기간입니다. 내기 전에 이 세 가…",
     "url": "https://www.tiktok.com/@neob_official/video/7712319379353980181",
-    "views": 69,
+    "views": 92,
     "likes": 0,
     "comments": 0,
     "shares": 0,
@@ -795,7 +815,7 @@ const SOCIAL = {
     "date": "2026-11-25 17:02",
     "title": "🚨 내년 1월 1일부터 대출 막힙니다 연봉 오른 만큼 한도도 늘 거라고 생각하셨다면 꼭 보세요. ✔️ 소득이…",
     "url": "https://www.tiktok.com/@neob_official/video/7712016270861929749",
-    "views": 249,
+    "views": 252,
     "likes": 0,
     "comments": 0,
     "shares": 0,
@@ -806,7 +826,7 @@ const SOCIAL = {
     "date": "2026-11-24 18:04",
     "title": "💸10억 아파트로 갈아타면 내 돈 6억. 한 달 이자는 얼마일까?💸 집값 5억부터 15억까지, 갈아타기로 살…",
     "url": "https://www.tiktok.com/@neob_official/video/7711661417665023252",
-    "views": 1127,
+    "views": 1209,
     "likes": 4,
     "comments": 0,
     "shares": 0,
@@ -817,8 +837,8 @@ const SOCIAL = {
     "date": "2026-11-24 17:57",
     "title": "💰10억 아파트를 생애최초로 사면 내 돈 4억. 한 달 이자는 얼마일까?💰 집값 5억부터 15억까지, 생애최…",
     "url": "https://www.tiktok.com/@neob_official/video/7711659602437328148",
-    "views": 2402,
-    "likes": 10,
+    "views": 2631,
+    "likes": 11,
     "comments": 0,
     "shares": 3,
     "saves": null
@@ -1015,7 +1035,7 @@ const SOCIAL = {
     "date": "2026-10-08 18:30",
     "title": "10/08 18:30 영상",
     "url": "https://www.tiktok.com/@neob_official/video/7693380076884348178",
-    "views": 104,
+    "views": 105,
     "likes": 3,
     "comments": 0,
     "shares": 0,
@@ -1440,9 +1460,9 @@ const SOCIAL = {
     "saves": null
    }
   ],
-  "updated": "2026-11-26 17:00",
+  "updated": "2026-11-27 17:01",
   "source": "공식 통계",
-  "videosChecked": "2026-11-26 17:00"
+  "videosChecked": "2026-11-27 17:01"
  },
  "yt": {
   "daily": {
