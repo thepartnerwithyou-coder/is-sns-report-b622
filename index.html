@@ -421,8 +421,10 @@ function drawYT(){
 
   // 일별 조회수 — 고른 주에 올라온 영상 전체의 하루 조회수 (2026-11-28 사용자 지시)
   //   공개 페이지 누적 조회수(YT.results log, 매일 17시 자동)를 확인한 날끼리 뺀 값. 확인 안 한 날(주말)은 비우고 다음 확인일에 합쳐짐
-  const daily = id => { const byDay = new Map(); YT.results[id].log.forEach(l=>byDay.set(l[0].slice(0,10),l[1]));
-    const out = new Map(); let prev = 0; [...byDay.keys()].sort().forEach(d=>{ out.set(d,Math.max(0,byDay.get(d)-prev)); prev = byDay.get(d); }); return out; };
+  //   게시일 이후에 처음 확인한 영상은 첫 확인일 값이 며칠치 합이라 그날은 비움
+  const daily = id => { const r = YT.results[id], byDay = new Map(); r.log.forEach(l=>byDay.set(l[0].slice(0,10),l[1]));
+    const days = [...byDay.keys()].sort(), out = new Map(); let prev = days[0]===r.published.slice(0,10) ? 0 : null;
+    days.forEach(d=>{ if(prev!=null) out.set(d,Math.max(0,byDay.get(d)-prev)); prev = byDay.get(d); }); return out; };
   const wks = [...new Map(now.map(x=>{ const w=weekLabel(x.v.uploaded); return [w.key,w]; })).values()].sort((a,b)=>b.key-a.key);
   if(!wks.some(w=>w.key===ytWeek)) ytWeek = wks.length ? wks[0].key : null;
   const wkVids = now.filter(x=>weekLabel(x.v.uploaded).key===ytWeek).sort((a,b)=>a.v.uploaded<b.v.uploaded?-1:1);
@@ -435,7 +437,7 @@ function drawYT(){
     ${wkVids.length?`<div class="row"><div class="card"><h3>일별 조회수 <small>그 주에 올라온 영상 ${wkVids.length}개 · 영상별 선, 점선은 합계 · ${wkRange}</small></h3>
       <div class="controls" style="margin:4px 0 8px">${wks.map(w=>`<button class="${ytWeek===w.key?"on":""}" onclick="ytWeek=${w.key};draw()">${w.label} 업로드</button>`).join("")}</div>
       <div class="chart"><canvas id="c0"></canvas></div>
-      <div class="sub" style="margin-top:6px">유튜브 공개 페이지 조회수를 매일 오후 5시에 확인해 전날과 뺀 값입니다. 주말처럼 확인하지 않은 날은 비어 있고, 그 사이 조회수는 다음 확인일에 합쳐집니다. 마지막 날은 확인 시각(${last?last.slice(11):"-"})까지입니다.</div></div></div>`:""}
+      <div class="sub" style="margin-top:6px">유튜브 공개 페이지 조회수를 매일 오후 5시에 확인해 전날과 뺀 값입니다. 주말처럼 확인하지 않은 날은 비어 있고, 그 사이 조회수는 다음 확인일에 합쳐집니다. 게시하고 며칠 뒤에 처음 확인한 영상(예: 이지 사용가이드 01~06)은 그 전 조회수를 날짜별로 나눌 수 없어 다음 확인일부터 선이 그려집니다. 마지막 날은 확인 시각(${last?last.slice(11):"-"})까지입니다.</div></div></div>`:""}
     <h3 style="font-size:16px;margin:24px 0 4px">영상 등록 일정표</h3>
     <div class="sub" style="margin:0 0 12px">통계 안잡힘: 클릭률·평균 시청은 유튜브 스튜디오에서 공개 1~2일 뒤 집계되고, 스튜디오를 확인한 날 반영됩니다.</div>
     ${schedBox("롱폼")}${schedBox("쇼츠")}
