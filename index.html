@@ -379,7 +379,8 @@ function drawYT(){
   const late = S.filter(v=>ytStatus(v)==="지연").length, ready = S.filter(v=>v.status==="제작 완료"||v.status==="비공개 업로드").length;
   const card = (l,v,sub)=>`<div class="card kpi"><div class="label">${l}</div><div class="num">${v}</div><div class="na">${sub}</div></div>`;
   const kpis =
-    card("업로드한 영상", `${up.length}개`, `일정표 ${S.length}개 중 · 업로드 대기 ${ready}개${late?` · <b style="color:#dc2626">지연 ${late}개</b>`:""}`) +
+    // 교수님 요청(2026-11-28): 업로드한 영상을 롱폼·쇼츠로 구분
+    card("업로드한 영상", `<span style="font-size:22px;line-height:1.35">롱폼 ${up.filter(v=>v.type==="롱폼").length}개<br>쇼츠 ${up.filter(v=>v.type==="쇼츠").length}개</span>`, `합계 ${up.length}개${ready?` · 업로드 대기 ${ready}개`:""}${late?` · <b style="color:#dc2626">지연 ${late}개</b>`:""}`) +
     card("누적 조회수", fmt(V), "우리 영상 합계") +
     card("시청 시간", `${H.toFixed(1)}시간`, "우리 영상 합계") +
     card("노출 클릭률", ctr===null?"-":ctr.toFixed(1)+"%", "우리 영상 · 썸네일을 보고 누른 비율") +
@@ -395,14 +396,15 @@ function drawYT(){
     // 쇼츠는 노출 클릭률이 없어 '본 비율'(넘기지 않고 본 비율)을 대신 적음 — 주간보고 PDF와 같은 기준
     const ctr = v.type==="쇼츠" ? (r && r.stayed!=null ? `본 비율 ${Math.round(r.stayed)}%` : na()) : (n && n[4]!=null ? n[4].toFixed(1)+"%" : na());
     const watch = n && n[5]!=null ? mmss(n[5]) + (n[6]!=null ? ` (${Math.round(n[6])}%)` : "") : na();
-    return `<tr><td>${v.uploaded?md2(v.uploaded):'<span class="na">미정</span>'}</td><td>${v.brand.replace("부동산","")}</td>
+    return `<tr><td>${md2(v.uploaded)}</td><td>${v.brand.replace("부동산","")}</td>
       <td class="t">${title}</td><td><span class="pill" style="background:${ST_COLOR[st]||"#94a3b8"}">${st}</span></td>
       <td class="r">${n?fmt(n[1]):na()}</td><td class="r">${ctr}</td><td class="r">${watch}</td></tr>`;
   };
   // 롱폼·쇼츠를 박스로 나눠 표시
   const schedBox = type=>{
-    const L = S.filter(v=>v.type===type), done = L.filter(v=>v.status==="업로드 완료").length;
-    return `<div class="row"><div class="card"><h3>${type} <small>${L.length}개 중 업로드 ${done}개 · 제목을 누르면 유튜브로 이동</small></h3>
+    // 업로드일이 정해지지 않은(미정) 영상은 표에서 뺌 (2026-11-28 사용자 지시)
+    const L = S.filter(v=>v.type===type && v.uploaded).sort((a,b)=>a.uploaded<b.uploaded?-1:1);
+    return `<div class="row"><div class="card"><h3>${type} <small>업로드 ${L.length}개 · 제목을 누르면 유튜브로 이동</small></h3>
       <div class="scroll"><table><tr><th>업로드일</th><th>브랜드</th><th>제목</th><th>상태</th><th class="r">조회수</th><th class="r">${type==="쇼츠"?"본 비율":"노출 클릭률"}</th><th class="r">평균 시청</th></tr>${L.map(row).join("")}</table></div></div></div>`;
   };
 
@@ -435,7 +437,7 @@ function drawYT(){
       <div class="chart"><canvas id="c0"></canvas></div>
       <div class="sub" style="margin-top:6px">유튜브 공개 페이지 조회수를 매일 오후 5시에 확인해 전날과 뺀 값입니다. 주말처럼 확인하지 않은 날은 비어 있고, 그 사이 조회수는 다음 확인일에 합쳐집니다. 마지막 날은 확인 시각(${last?last.slice(11):"-"})까지입니다.</div></div></div>`:""}
     <h3 style="font-size:16px;margin:24px 0 4px">영상 등록 일정표</h3>
-    <div class="sub" style="margin:0 0 12px">${Object.entries(ST_COLOR).filter(([k])=>k!=="지연").map(([k,c])=>`<span class="pill" style="background:${c}">${k}</span>`).join(" ")} &nbsp; 통계 안잡힘: 클릭률·평균 시청은 유튜브 스튜디오에서 공개 1~2일 뒤 집계되고, 스튜디오를 확인한 날 반영됩니다.</div>
+    <div class="sub" style="margin:0 0 12px">통계 안잡힘: 클릭률·평균 시청은 유튜브 스튜디오에서 공개 1~2일 뒤 집계되고, 스튜디오를 확인한 날 반영됩니다.</div>
     ${schedBox("롱폼")}${schedBox("쇼츠")}
     <div class="row"><div class="card"><h3>영상별 결과 <small>제목을 누르면 상세</small></h3>${results}</div></div>
     <h3 style="font-size:16px;margin:24px 0 4px">${YT.channel} 최근 영상과 비교</h3>
