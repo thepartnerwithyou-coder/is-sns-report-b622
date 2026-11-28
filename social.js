@@ -58,6 +58,12 @@ const SOCIAL = {
     335,
     152,
     150
+   ],
+   [
+    "2026-11-28",
+    335,
+    152,
+    150
    ]
   ],
   "daily": [
@@ -363,26 +369,34 @@ const SOCIAL = {
     3956,
     47,
     78,
-    0
+    5
    ],
    [
     "2026-11-26",
-    1349,
-    1580,
+    1372,
+    1606,
     9,
     14,
     0
+   ],
+   [
+    "2026-11-27",
+    837,
+    928,
+    10,
+    15,
+    null
    ]
   ],
   "posts": [
    {
-    "date": "2026-11-26 12:41",
+    "date": "2026-11-28 15:14",
     "type": "릴스",
-    "title": "📩 현재 DM 자동 발송에 오류가 있어요! 댓글 남겨주시면 확인 후 직접 자료 보내드릴게요 😊",
-    "url": "https://www.instagram.com/reel/DgMKcWsg3qt/",
-    "views": 563,
-    "reach": 490,
-    "likes": 4,
+    "title": "종부세 모르면 수백만 원 손해 봅니다 🚨",
+    "url": "https://www.instagram.com/reel/DgRlbUegNba/",
+    "views": 132,
+    "reach": 5,
+    "likes": 2,
     "comments": 2,
     "saved": 0,
     "shares": 0
@@ -392,7 +406,7 @@ const SOCIAL = {
     "type": "릴스",
     "title": "💸10억 아파트로 갈아타면 내 돈 6억. 한 달 이자는 얼마일까?💸",
     "url": "https://www.instagram.com/reel/DgKHXcxAlFE/",
-    "views": 1920,
+    "views": 1926,
     "reach": 1617,
     "likes": 8,
     "comments": 0,
@@ -404,7 +418,7 @@ const SOCIAL = {
     "type": "릴스",
     "title": "💰10억 아파트를 생애최초로 사면 내 돈 4억. 한 달 이자는 얼마일까?💰",
     "url": "https://www.instagram.com/reel/DgHkxXngnQg/",
-    "views": 1585,
+    "views": 1587,
     "reach": 1290,
     "likes": 6,
     "comments": 0,
@@ -416,12 +430,12 @@ const SOCIAL = {
     "type": "릴스",
     "title": "🚨 내년 1월부터 대출, 지금처럼 안 나옵니다",
     "url": "https://www.instagram.com/reel/DgE-7BJgYU4/",
-    "views": 37247,
-    "reach": 33617,
-    "likes": 69,
+    "views": 38150,
+    "reach": 34439,
+    "likes": 70,
     "comments": 54,
-    "saved": 53,
-    "shares": 94
+    "saved": 57,
+    "shares": 96
    },
    {
     "date": "2026-11-19 18:22",
@@ -452,8 +466,8 @@ const SOCIAL = {
     "type": "릴스",
     "title": "AI 활용, 어디까지 알고 계십니까?",
     "url": "https://www.instagram.com/reel/DfzCofZgmfb/",
-    "views": 181,
-    "reach": 146,
+    "views": 184,
+    "reach": 147,
     "likes": 3,
     "comments": 0,
     "saved": 0,
@@ -464,7 +478,7 @@ const SOCIAL = {
     "type": "릴스",
     "title": "계약 끝났다고 고객 관리도 끝내셨나요?\" 🤦‍♂️",
     "url": "https://www.instagram.com/reel/Det5ClTEYza/",
-    "views": 417,
+    "views": 418,
     "reach": 357,
     "likes": 6,
     "comments": 2,
@@ -736,7 +750,7 @@ const SOCIAL = {
     "shares": 0
    }
   ],
-  "updated": "2026-11-27 17:00"
+  "updated": "2026-11-28 15:50"
  },
  "tt": {
   "account": "neob_officail",
@@ -796,6 +810,12 @@ const SOCIAL = {
     10,
     91,
     66
+   ],
+   [
+    "2026-11-28",
+    11,
+    91,
+    66
    ]
   ],
   "videos": [
@@ -826,7 +846,7 @@ const SOCIAL = {
     "date": "2026-11-24 18:04",
     "title": "💸10억 아파트로 갈아타면 내 돈 6억. 한 달 이자는 얼마일까?💸 집값 5억부터 15억까지, 갈아타기로 살…",
     "url": "https://www.tiktok.com/@neob_official/video/7711661417665023252",
-    "views": 1209,
+    "views": 1235,
     "likes": 4,
     "comments": 0,
     "shares": 0,
@@ -837,7 +857,7 @@ const SOCIAL = {
     "date": "2026-11-24 17:57",
     "title": "💰10억 아파트를 생애최초로 사면 내 돈 4억. 한 달 이자는 얼마일까?💰 집값 5억부터 15억까지, 생애최…",
     "url": "https://www.tiktok.com/@neob_official/video/7711659602437328148",
-    "views": 2631,
+    "views": 2773,
     "likes": 11,
     "comments": 0,
     "shares": 3,
@@ -1460,9 +1480,9 @@ const SOCIAL = {
     "saves": null
    }
   ],
-  "updated": "2026-11-27 17:01",
+  "updated": "2026-11-28 15:51",
   "source": "공식 통계",
-  "videosChecked": "2026-11-27 17:01"
+  "videosChecked": "2026-11-28 15:51"
  },
  "yt": {
   "daily": {

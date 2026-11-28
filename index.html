@@ -342,7 +342,7 @@ function since(pub, at){
   return h<1 ? `${Math.round(h*60)}분` : h<48 ? `${Math.round(h)}시간` : `${Math.round(h/24)}일`;
 }
 // 네오비TV 최근 영상과 비교 — 기간 안에 올라온 채널 영상 TOP 5 + 우리 영상 순위
-let cmpPer = "2w";
+let cmpPer = "2w", ytWeek = null;
 const CMP_PER = {"2w":["최근 2주",d=>d.setDate(d.getDate()-14)],"1m":["최근 1달",d=>d.setMonth(d.getMonth()-1)],"3m":["최근 3개월",d=>d.setMonth(d.getMonth()-3)]};
 function cmpBox(type, ours){
   const C = YT.compare, from = new Date(C.checked.slice(0,10)); CMP_PER[cmpPer][1](from);
@@ -386,18 +386,24 @@ function drawYT(){
     card("평균 시청률", now.some(x=>x.n[6]!=null)?Math.round(avg(now.filter(x=>x.n[6]!=null),x=>x.n[6]))+"%":"-", "우리 영상 · 영상 길이 대비 본 비율") +
     card("구독자 증가", sgn(sum(now,x=>x.n[9])), "우리 영상을 보고 구독");
 
+  // 일정표: 예정일 칸 없음, 브랜드는 이지/이즈, 숫자가 없으면 빈칸 대신 '통계 안잡힘 (사유)' (2026-11-28 사용자 지시)
   const row = v=>{
-    const st = ytStatus(v), n = v.id ? ytNow(v.id) : null;
+    const st = ytStatus(v), n = v.id ? ytNow(v.id) : null, r = n ? YT.results[v.id] : null;
     const title = v.id ? `<a href="https://youtu.be/${v.id}" target="_blank">${v.title}</a>` : v.title;
-    return `<tr><td>${v.plan?md2(v.plan):'<span class="na">미정</span>'}</td><td>${v.uploaded?md2(v.uploaded):"-"}</td><td>${v.brand}</td>
+    const why = r && new Date()-dt(r.published) < 48*36e5 ? "1~2일 뒤 집계" : "스튜디오 확인 전";   // 스튜디오 상세는 이틀 늦게 집계됨
+    const na = () => `<span class="na">${n ? `통계 안잡힘<br>(${why})` : "업로드 전"}</span>`;
+    // 쇼츠는 노출 클릭률이 없어 '본 비율'(넘기지 않고 본 비율)을 대신 적음 — 주간보고 PDF와 같은 기준
+    const ctr = v.type==="쇼츠" ? (r && r.stayed!=null ? `본 비율 ${Math.round(r.stayed)}%` : na()) : (n && n[4]!=null ? n[4].toFixed(1)+"%" : na());
+    const watch = n && n[5]!=null ? mmss(n[5]) + (n[6]!=null ? ` (${Math.round(n[6])}%)` : "") : na();
+    return `<tr><td>${v.uploaded?md2(v.uploaded):'<span class="na">미정</span>'}</td><td>${v.brand.replace("부동산","")}</td>
       <td class="t">${title}</td><td><span class="pill" style="background:${ST_COLOR[st]||"#94a3b8"}">${st}</span></td>
-      <td class="r">${n?fmt(n[1]):"-"}</td><td class="r">${n&&n[4]!=null?n[4].toFixed(1)+"%":"-"}</td><td class="r">${n&&n[5]!=null?mmss(n[5])+` (${n[6]}%)`:"-"}</td></tr>`;
+      <td class="r">${n?fmt(n[1]):na()}</td><td class="r">${ctr}</td><td class="r">${watch}</td></tr>`;
   };
   // 롱폼·쇼츠를 박스로 나눠 표시
   const schedBox = type=>{
     const L = S.filter(v=>v.type===type), done = L.filter(v=>v.status==="업로드 완료").length;
     return `<div class="row"><div class="card"><h3>${type} <small>${L.length}개 중 업로드 ${done}개 · 제목을 누르면 유튜브로 이동</small></h3>
-      <div class="scroll"><table><tr><th>예정일</th><th>업로드일</th><th>브랜드</th><th>제목</th><th>상태</th><th class="r">조회수</th><th class="r">노출 클릭률</th><th class="r">평균 시청</th></tr>${L.map(row).join("")}</table></div></div></div>`;
+      <div class="scroll"><table><tr><th>업로드일</th><th>브랜드</th><th>제목</th><th>상태</th><th class="r">조회수</th><th class="r">${type==="쇼츠"?"본 비율":"노출 클릭률"}</th><th class="r">평균 시청</th></tr>${L.map(row).join("")}</table></div></div></div>`;
   };
 
   const results = now.map(({v,r,n},i)=>{
@@ -411,20 +417,25 @@ function drawYT(){
       ${r.sources.length?`<div class="sub" style="margin:0 0 2px">시청자가 영상을 찾은 경로</div>${srcBars(src,col)}`:""}</details>`;
   }).join("") || `<div class="sub">아직 올라간 영상이 없습니다.</div>`;
 
-  // 확인 기록이 2번 이상 쌓인 영상만 추이 그래프로 (날짜별 마지막 값)
-  const withLog = now.filter(x=>x.r.log.length>1);
-  const days2 = [...new Set(withLog.flatMap(x=>x.r.log.map(l=>l[0].slice(0,10))))].sort();
-  // 스튜디오에서 읽은 날짜별 조회수 (social.js SOCIAL.yt.daily, tools/youtube_daily.py)
-  const yd = (typeof SOCIAL!=="undefined" && SOCIAL.yt && SOCIAL.yt.daily) || {};
-  const ydIds = S.filter(v=>v.id && yd[v.id]).map(v=>v);
-  const YD = ydIds.length ? {vids:ydIds, days:[...new Set(ydIds.flatMap(v=>yd[v.id].map(r=>r[0])))].sort()} : null;
+  // 일별 조회수 — 고른 주에 올라온 영상 전체의 하루 조회수 (2026-11-28 사용자 지시)
+  //   공개 페이지 누적 조회수(YT.results log, 매일 17시 자동)를 확인한 날끼리 뺀 값. 확인 안 한 날(주말)은 비우고 다음 확인일에 합쳐짐
+  const daily = id => { const byDay = new Map(); YT.results[id].log.forEach(l=>byDay.set(l[0].slice(0,10),l[1]));
+    const out = new Map(); let prev = 0; [...byDay.keys()].sort().forEach(d=>{ out.set(d,Math.max(0,byDay.get(d)-prev)); prev = byDay.get(d); }); return out; };
+  const wks = [...new Map(now.map(x=>{ const w=weekLabel(x.v.uploaded); return [w.key,w]; })).values()].sort((a,b)=>b.key-a.key);
+  if(!wks.some(w=>w.key===ytWeek)) ytWeek = wks.length ? wks[0].key : null;
+  const wkVids = now.filter(x=>weekLabel(x.v.uploaded).key===ytWeek).sort((a,b)=>a.v.uploaded<b.v.uploaded?-1:1);
+  const lastDay = last ? last.slice(0,10) : TODAY, wkDays = [];
+  for(let d=new Date(ytWeek||Date.now()); wkDays.length<14 && ymd(d)<=lastDay; d.setDate(d.getDate()+1)) wkDays.push(ymd(d));
+  const wkRange = wkDays.length ? `${md2(wkDays[0])} ~ ${md2(wkDays[wkDays.length-1])}` : "";
 
   document.getElementById("view").innerHTML = `
     <div class="row kpis">${kpis}</div>
-    ${YD?`<div class="row"><div class="card"><h3>일별 조회수 <small>영상별 선 · 점선은 하루 합계 · 스튜디오 집계 ${dash(YD.days[YD.days.length-1])}까지 (스튜디오는 이틀 늦게 집계)</small></h3><div class="chart"><canvas id="c0"></canvas></div></div></div>`:""}
-    ${!YD&&days2.length>1?`<div class="row"><div class="card"><h3>조회수 추이 <small>영상별 누적 조회수 · 확인한 날마다 한 점</small></h3><div class="chart"><canvas id="c1"></canvas></div></div></div>`:""}
+    ${wkVids.length?`<div class="row"><div class="card"><h3>일별 조회수 <small>그 주에 올라온 영상 ${wkVids.length}개 · 영상별 선, 점선은 합계 · ${wkRange}</small></h3>
+      <div class="controls" style="margin:4px 0 8px">${wks.map(w=>`<button class="${ytWeek===w.key?"on":""}" onclick="ytWeek=${w.key};draw()">${w.label} 업로드</button>`).join("")}</div>
+      <div class="chart"><canvas id="c0"></canvas></div>
+      <div class="sub" style="margin-top:6px">유튜브 공개 페이지 조회수를 매일 오후 5시에 확인해 전날과 뺀 값입니다. 주말처럼 확인하지 않은 날은 비어 있고, 그 사이 조회수는 다음 확인일에 합쳐집니다. 마지막 날은 확인 시각(${last?last.slice(11):"-"})까지입니다.</div></div></div>`:""}
     <h3 style="font-size:16px;margin:24px 0 4px">영상 등록 일정표</h3>
-    <div class="sub" style="margin:0 0 12px">${Object.entries(ST_COLOR).map(([k,c])=>`<span class="pill" style="background:${c}">${k}</span>`).join(" ")} &nbsp; 예정일이 지났는데 올라가지 않으면 '지연'으로 표시됩니다.</div>
+    <div class="sub" style="margin:0 0 12px">${Object.entries(ST_COLOR).filter(([k])=>k!=="지연").map(([k,c])=>`<span class="pill" style="background:${c}">${k}</span>`).join(" ")} &nbsp; 통계 안잡힘: 클릭률·평균 시청은 유튜브 스튜디오에서 공개 1~2일 뒤 집계되고, 스튜디오를 확인한 날 반영됩니다.</div>
     ${schedBox("롱폼")}${schedBox("쇼츠")}
     <div class="row"><div class="card"><h3>영상별 결과 <small>제목을 누르면 상세</small></h3>${results}</div></div>
     <h3 style="font-size:16px;margin:24px 0 4px">${YT.channel} 최근 영상과 비교</h3>
@@ -436,19 +447,13 @@ function drawYT(){
     <div class="sub" style="margin-top:8px">${YT.channel} 채널 전체 숫자는 네오비 영상이 섞여 있어 빼고, 우리가 올린 영상만 집계합니다. 수치는 YouTube 스튜디오 동영상 분석에서 옮겨 적으며, 업데이트는 data.js의 YT에 반영합니다.</div>`;
 
   const pal = [col,"#2f5bea","#f59e0b","#8b5cf6","#03a94d","#94a3b8"];
-  if(YD){
-    // 영상별 선 + 하루 합계 점선 (공개 전 날짜는 비워 둠)
-    const ds = YD.vids.map((v,i)=>{ const m=new Map(yd[v.id]); return {label:v.title.slice(0,24),data:YD.days.map(d=>m.has(d)?m.get(d):null),borderColor:pal[i%pal.length],backgroundColor:pal[i%pal.length]+"22",tension:.3,pointRadius:3}; });
-    ds.push({label:"하루 합계",data:YD.days.map(d=>sum(YD.vids,v=>(new Map(yd[v.id])).get(d)||0)),borderColor:"#94a3b8",borderDash:[5,4],tension:.3,pointRadius:3});
-    charts.push(new Chart(document.getElementById("c0"),{type:"line",data:{labels:YD.days.map(dash),datasets:ds},
+  if(wkVids.length){
+    // 영상별 선 + 하루 합계 점선 (공개 전·확인 안 한 날은 비워 둠)
+    const per = wkVids.map(x=>{ const m=daily(x.v.id); return wkDays.map(d=>m.has(d)?m.get(d):null); });
+    const ds = wkVids.map((x,i)=>({label:`${x.v.brand.replace("부동산","")} ${x.v.type} · ${x.v.title.slice(0,20)}`,data:per[i],borderColor:pal[i%pal.length],backgroundColor:pal[i%pal.length]+"22",tension:.3,spanGaps:true,pointRadius:3}));
+    ds.push({label:"합계",data:wkDays.map((d,j)=>per.some(p=>p[j]!=null)?sum(per,p=>p[j]||0):null),borderColor:"#94a3b8",borderDash:[5,4],tension:.3,spanGaps:true,pointRadius:3});
+    charts.push(new Chart(document.getElementById("c0"),{type:"line",data:{labels:wkDays.map(dash),datasets:ds},
       options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true}},plugins:{tooltip:{mode:"index",intersect:false}}}}));
-  }
-  if(!YD&&days2.length>1){
-    const ds = withLog.map((x,i)=>{
-      const byDay = new Map(x.r.log.map(l=>[l[0].slice(0,10),l[1]]));
-      return {label:x.v.title.slice(0,24),data:days2.map(d=>byDay.has(d)?byDay.get(d):null),borderColor:pal[i%pal.length],backgroundColor:pal[i%pal.length]+"22",tension:.3,spanGaps:true,pointRadius:3};
-    });
-    charts.push(new Chart(document.getElementById("c1"),{type:"line",data:{labels:days2.map(md2),datasets:ds},options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}}));
   }
 }
 // ===== 인스타그램 (회사 계정, 메타 공식 통로 · tools/instagram_stats.py가 social.js에 씀) =====
